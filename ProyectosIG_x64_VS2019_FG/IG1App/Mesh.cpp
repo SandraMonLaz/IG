@@ -22,16 +22,64 @@ void Mesh::render() const
       glEnableClientState(GL_COLOR_ARRAY);
       glColorPointer(4, GL_DOUBLE, 0, vColors.data());  // components number (rgba=4), type of each component, stride, pointer  
     }
+    if (vTexCoords.size() > 0) {
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());
+    }
 
 	draw();
 
     glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+   
   }
 }
 //-------------------------------------------------------------------------
+
+Mesh* Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh) {
+    Mesh* mesh = generaRectangulo(w,h);
+    mesh->vTexCoords.reserve(4);
+    mesh->vTexCoords.emplace_back(0, rh);
+    mesh->vTexCoords.emplace_back(0, 0);
+    mesh->vTexCoords.emplace_back(rw, rh);
+    mesh->vTexCoords.emplace_back(rw, 0);
+    return mesh;
+}
+Mesh* Mesh::generaEstrellaTexCor(GLdouble re, GLuint np, GLdouble h) {
+    Mesh* mesh = new Mesh();
+    mesh->mPrimitive = GL_TRIANGLE_FAN;
+    mesh->mNumVertices = (2 * np) + 2;
+    mesh->vVertices.reserve(mesh->mNumVertices);
+    mesh->vTexCoords.reserve(mesh->mNumVertices);
+
+    mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
+    mesh->vTexCoords.emplace_back(0.5, 0.5);
+    double angle = 90;
+    double radio = re;
+    double rText = 0.5;
+    bool exterior = true;
+    for (int i = 0; i < ((np * 2) + 1); ++i) {
+        if (exterior) {
+            radio = re;
+            exterior = false;
+            rText = 0.5;
+        }
+        else {
+            radio = re / 2;
+            exterior = true;
+            rText = 0.25;
+        }
+        double x = radio * cos(radians(angle));
+        double y = radio * sin(radians(angle));
+        mesh->vVertices.emplace_back(x, y, h);
+        mesh->vTexCoords.emplace_back(0.5 + rText * cos(radians(angle)), 0.5 + rText * sin(radians(angle)));
+
+        angle += 360.0 / ((np * 2));
+    }
+
+    return mesh;
+}
 Mesh* Mesh::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h) {
     Mesh* mesh = new Mesh();
     mesh->mPrimitive = GL_TRIANGLE_FAN;
