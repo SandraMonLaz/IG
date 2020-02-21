@@ -17,6 +17,10 @@ void Scene::init()
 {
 	setGL();  // OpenGL settings
 
+	Texture* t = new Texture();
+	t->load("./Bmps/container.bmp");
+	gTextures.push_back(t);
+
 	// allocate memory and load resources
 	// Lights
 	// Textures
@@ -45,6 +49,7 @@ void Scene::init()
 		gObjects.push_back(c);
 		gObjects.push_back(new EjesRGB(400.0));
 	}
+	glDisable(GL_TEXTURE_2D);
 }
 
 void Scene::setState(int id) {
@@ -65,6 +70,12 @@ void Scene::free()
 	{
 		delete el;  el = nullptr;
 	}
+
+	for (Texture* el : gTextures)
+	{
+		delete el;  el = nullptr;
+	}
+
 }
 //-------------------------------------------------------------------------
 void Scene::setGL()
@@ -79,6 +90,7 @@ void Scene::resetGL()
 {
 	glClearColor(.0, .0, .0, .0);  // background color (alpha=1 -> opaque)
 	glDisable(GL_DEPTH_TEST);  // disable Depth test 	
+	glDisable(GL_TEXTURE_2D);  // disable textures
 }
 //-------------------------------------------------------------------------
 

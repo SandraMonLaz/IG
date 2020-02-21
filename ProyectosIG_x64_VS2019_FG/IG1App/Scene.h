@@ -7,6 +7,7 @@
 
 #include "Camera.h"
 #include "Entity.h"
+#include "Texture.h"
 
 #include <vector>
 
@@ -33,6 +34,7 @@ protected:
 	void resetGL();
 
 	std::vector<Abs_Entity*> gObjects;  // Entities (graphic objects) of the scene
+	std::vector<Texture*> gTextures;    
 };
 //-------------------------------------------------------------------------
 
