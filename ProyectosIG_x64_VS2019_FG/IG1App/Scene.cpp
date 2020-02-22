@@ -46,11 +46,22 @@ void Scene::init()
 		starText->load("../Bmps/baldosaP.bmp");
 		gTextures.push_back(starText);
 
+		Texture* cajaText = new Texture();
+		cajaText->load("../Bmps/container.bmp");
+		gTextures.push_back(cajaText);
 		Texture* suelo = new Texture();
 		suelo->load("../Bmps/baldosaC.bmp");
 		gTextures.push_back(suelo);
+
+
+		Texture* cajaInside = new Texture();
+		cajaInside->load("../Bmps/papelE.bmp");
+		gTextures.push_back(cajaInside);
+
 		//---------------Objetos Escena---
 		Caja* c = new Caja(100);
+		c->setTexture(cajaText);
+		c->setTextInside(cajaInside);
 		Estrella* e = new Estrella(4, 100, 100);
 		e->setTexture(starText);
 		e->changeColor(0.0, 1.0, 0.0, 1.0);
