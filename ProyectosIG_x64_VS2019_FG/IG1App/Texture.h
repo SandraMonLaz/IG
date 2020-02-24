@@ -27,6 +27,7 @@ public:
   GLuint height() const { return mHeight; };
   
   void setWrap(GLuint wp);  // GL_REPEAT, GL_CLAMP 
+  void  loadColorBuffer(GLsizei width, GLsizei height);
 
 protected:
 
