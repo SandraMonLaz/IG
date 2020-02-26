@@ -7,6 +7,9 @@ using namespace glm;
 
 Caja::Caja(GLdouble ld) {
 	mMesh = Mesh::generaCajaTexCor(ld);
+	suelo = Mesh::generaRectanguloTexCor(ld,ld,1,1);
+	matSuelo = translate(dmat4(1), dvec3(0, -ld / 2, 0));
+	matSuelo = rotate(matSuelo,radians(90.0),dvec3(1,0,0));
 }
 
 
@@ -36,8 +39,13 @@ void Caja::render(glm::dmat4 const& modelViewMat)const {
 		if (t != nullptr)t->unbind();
 
 		//Reset
-		glLineWidth(1);
 		glDisable(GL_CULL_FACE);
 	}
+	if (suelo != nullptr) {
+		dmat4 aMat = modelViewMat * matSuelo;  // glm matrix multiplication
+		upload(aMat);
+		suelo->render();
+	}
+		glLineWidth(1);
 
 }
