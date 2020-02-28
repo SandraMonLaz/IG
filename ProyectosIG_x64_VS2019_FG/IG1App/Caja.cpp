@@ -33,7 +33,7 @@ void Caja::render(glm::dmat4 const& modelViewMat)const {
 		glCullFace(GL_FRONT);
 		mMesh->render();
 		//Reset
-		if (t != nullptr)t->unbind();
+		if (mTexture != nullptr)mTexture->unbind();
 
 		//Reset
 		glLineWidth(1);

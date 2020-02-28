@@ -9,7 +9,6 @@
 #include "RectanguloRGB.h"
 #include "Estrella.h"
 #include "Caja.h"
-#include "Cristalera.h"
 #include "Suelo.h"
 
 using namespace glm;
@@ -59,18 +58,10 @@ void Scene::init()
 		cajaInside->load("../Bmps/papelE.bmp");
 		gTextures.push_back(cajaInside);
 
-		Texture* cristalera = new Texture();
-		cristalera->load("../Bmps/windowV.bmp");
-		gTextures.push_back(cristalera);
-
 		//---------------Objetos Escena---
 		Caja* c = new Caja(100);
 		c->setTexture(cajaText);
 		c->setTextInside(cajaInside);
-
-		Cristalera* cris = new Cristalera(1000);
-		cris->setTexture(cristalera);
-
 		Estrella* e = new Estrella(4, 100, 100);
 		e->setTexture(starText);
 		e->changeColor(0.0, 1.0, 0.0, 1.0);
@@ -82,7 +73,6 @@ void Scene::init()
 		gObjects.push_back(c);
 		gObjects.push_back(s);
 		gObjects.push_back(new EjesRGB(400.0));
-		gObjects.push_back(cris);   //Mejor que esté al final para que se vea a través de él todos los objetos
 	}
 }
 
