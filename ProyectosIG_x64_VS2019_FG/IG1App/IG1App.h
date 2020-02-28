@@ -36,6 +36,8 @@ public:
 	// Graphics objects of the scene
 	Scene const& scene() { return *mScene; };
 
+	GLint getW() { return mWinW; }
+	GLint getH() { return mWinH; }
 	void run();    // the main event processing loop
 	void close();  // the application
 	

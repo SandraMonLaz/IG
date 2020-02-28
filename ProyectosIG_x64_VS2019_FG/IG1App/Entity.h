@@ -26,7 +26,7 @@ public:
 
 	Abs_Entity(): mModelMat(1.0), mColor(1){};  // 4x4 identity matrix
 	virtual ~Abs_Entity() {
-		delete mMesh; mMesh = nullptr;
+		delete mMesh; mMesh = nullptr; 
 	};
 
 	Abs_Entity(const Abs_Entity& e) = delete;  // no copy constructor

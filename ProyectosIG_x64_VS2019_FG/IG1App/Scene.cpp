@@ -10,6 +10,7 @@
 #include "Estrella.h"
 #include "Caja.h"
 #include "Suelo.h"
+#include "Foto.h"
 
 using namespace glm;
 //-------------------------------------------------------------------------
@@ -46,21 +47,39 @@ void Scene::init()
 		starText->load("../Bmps/baldosaP.bmp");
 		gTextures.push_back(starText);
 
-		Texture* suelo = new Texture();
-		suelo->load("../Bmps/baldosaC.bmp");
-		gTextures.push_back(suelo);
-		//---------------Objetos Escena---
-		Caja* c = new Caja(100);
-		Estrella* e = new Estrella(4, 100, 100);
-		e->setTexture(starText);
-		e->changeColor(0.0, 1.0, 0.0, 1.0);
-		Suelo* s = new Suelo(1000, 1000, 20.0, 20.0);
-		s->setTexture(suelo);
-		
+		Texture* sueloT = new Texture();
+		sueloT->load("../Bmps/baldosaC.bmp");
+		gTextures.push_back(sueloT);
 
-		gObjects.push_back(e);
-		gObjects.push_back(c);
-		gObjects.push_back(s);
+		Texture* cuboExt = new Texture();
+		cuboExt->load("../Bmps/container.bmp");
+		gTextures.push_back(cuboExt);
+
+		Texture* cuboInt = new Texture();
+		cuboInt->load("../Bmps/papelE.bmp");
+		gTextures.push_back(cuboInt);
+
+		Texture* fotoT = new Texture();
+		gTextures.push_back(fotoT);
+
+		//---------------Objetos Escena---
+		Caja* caja = new Caja(100,cuboInt,300);
+		caja->setTexture(cuboExt);
+
+		Estrella* estrella = new Estrella(4, 100, 100);
+		estrella->setTexture(starText);
+		estrella->changeColor(0.0, 1.0, 0.0, 1.0);
+
+		Suelo* suelo = new Suelo(1000, 1000, 10.0, 10.0);
+		suelo->setTexture(sueloT);
+		
+		Foto* foto = new Foto(100.0, 200.0);
+		foto->setTexture(fotoT);
+
+		gObjects.push_back(estrella);
+		gObjects.push_back(caja);
+		gObjects.push_back(suelo);
+		gObjects.push_back(foto);
 		gObjects.push_back(new EjesRGB(400.0));
 	}
 }

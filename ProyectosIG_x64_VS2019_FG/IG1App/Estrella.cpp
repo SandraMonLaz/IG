@@ -10,7 +10,7 @@ Estrella:: Estrella(int numPicos, double h, double re) : Abs_Entity() {
 	mMesh = Mesh::generaEstrellaTexCor(re, numPicos, h);
 	anguloY = 0;
 	anguloZ = 0;
-	mModelMat = translate(dmat4(1), dvec3(0, 150, 0));
+	mModelMat = translate(dmat4(1), dvec3(-300, 250, -300));
 }
 
 
@@ -42,7 +42,7 @@ void Estrella::render(glm::dmat4 const& modelViewMat) const {
 
 void Estrella::update() {
 
-	mModelMat = translate(dmat4(1), dvec3(0, 150, 0));
+	mModelMat = translate(dmat4(1), dvec3(-300, 250, -300));
 	mModelMat = rotate(mModelMat,radians(anguloY),dvec3(0,1,0));
 	anguloY++;
 	mModelMat = rotate(mModelMat, radians(anguloZ),dvec3(0,0,1));

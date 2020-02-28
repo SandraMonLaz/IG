@@ -125,6 +125,7 @@
     <ClInclude Include="CheckML.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Estrella.h" />
+    <ClInclude Include="Foto.h" />
     <ClInclude Include="IG1App.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Pixmap32RGBA.h" />
@@ -142,6 +143,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Estrella.cpp" />
+    <ClCompile Include="Foto.cpp" />
     <ClCompile Include="IG1App.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />

@@ -36,16 +36,6 @@ void Mesh::render() const
   }
 }
 //-------------------------------------------------------------------------
-
-Mesh* Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh) {
-    Mesh* mesh = generaRectangulo(w,h);
-    mesh->vTexCoords.reserve(4);
-    mesh->vTexCoords.emplace_back(0, rh);
-    mesh->vTexCoords.emplace_back(0, 0);
-    mesh->vTexCoords.emplace_back(rw, rh);
-    mesh->vTexCoords.emplace_back(rw, 0);
-    return mesh;
-}
 Mesh* Mesh::generaEstrellaTexCor(GLdouble re, GLuint np, GLdouble h) {
     Mesh* mesh = new Mesh();
     mesh->mPrimitive = GL_TRIANGLE_FAN;
@@ -108,7 +98,24 @@ Mesh* Mesh::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h) {
     
     return mesh;
 }
+//--------------------------------------------------------------------------------
+Mesh* Mesh::generaCajaTexCor(GLdouble ld) {
+    Mesh* mesh = generaContCubo(ld);
+    mesh->vTexCoords.reserve(10);
 
+    mesh->vTexCoords.emplace_back(0, 1);
+    mesh->vTexCoords.emplace_back(0, 0);
+    mesh->vTexCoords.emplace_back(1, 1);
+    mesh->vTexCoords.emplace_back(1, 0);
+    mesh->vTexCoords.emplace_back(2, 1);
+    mesh->vTexCoords.emplace_back(2, 0);
+    mesh->vTexCoords.emplace_back(3, 1);
+    mesh->vTexCoords.emplace_back(3, 0);
+    mesh->vTexCoords.emplace_back(4, 1);
+    mesh->vTexCoords.emplace_back(4, 0);
+
+    return mesh;
+}
 Mesh* Mesh:: generaContCubo(GLdouble ld) {
     Mesh* mesh = new Mesh();
     
@@ -130,6 +137,16 @@ Mesh* Mesh:: generaContCubo(GLdouble ld) {
     mesh->vVertices.emplace_back(-ld / 2, -ld / 2, ld / 2); //v1
 
 
+    return mesh;
+}
+//--------------------------------------------------------------------------
+Mesh* Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh) {
+    Mesh* mesh = generaRectangulo(w, h);
+    mesh->vTexCoords.reserve(4);
+    mesh->vTexCoords.emplace_back(0, rh);
+    mesh->vTexCoords.emplace_back(0, 0);
+    mesh->vTexCoords.emplace_back(rw, rh);
+    mesh->vTexCoords.emplace_back(rw, 0);
     return mesh;
 }
 Mesh* Mesh::generaRectanguloRGB(GLdouble w, GLdouble h) {
@@ -160,6 +177,7 @@ Mesh* Mesh::generaRectangulo(GLdouble w, GLdouble h) {
 
     return mesh;
 }
+//-----------------------------------------------------------------------
 Mesh* Mesh::generaTrianguloRGB(GLdouble rd) {
     Mesh* mesh = generaPoligono(3, rd);
     mesh->mPrimitive = GL_TRIANGLES;
@@ -199,6 +217,7 @@ Mesh* Mesh::generaTrianguloRGB(GLdouble rd) {
      delete triangulo; triangulo = nullptr;
      return mesh;
  }
+ //----------------------------------------------------------------------
 Mesh* Mesh::generaPoligono(GLuint numL, GLdouble rd){
     Mesh* mesh = new Mesh();
     mesh->mPrimitive = GL_LINE_LOOP;
