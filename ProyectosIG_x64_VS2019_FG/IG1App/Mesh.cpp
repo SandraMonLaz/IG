@@ -109,26 +109,6 @@ Mesh* Mesh::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h) {
     return mesh;
 }
 
-Mesh* Mesh::generaCajaTexCor(GLdouble nl) {
-    Mesh* mesh = Mesh::generaContCubo(nl);
-    mesh->vTexCoords.reserve(mesh->mNumVertices);
-    
-
-    mesh->vTexCoords.emplace_back(0,1);//V0
-    mesh->vTexCoords.emplace_back(0, 0);//V1
-    mesh->vTexCoords.emplace_back(1, 1);//V2
-    mesh->vTexCoords.emplace_back(1, 0);//V3
-    mesh->vTexCoords.emplace_back(2, 1);//V4
-    mesh->vTexCoords.emplace_back(2, 0);//V5
-    mesh->vTexCoords.emplace_back(3, 1);//V6
-    mesh->vTexCoords.emplace_back(3, 0);//V7
-    mesh->vTexCoords.emplace_back(4, 1);//V8
-    mesh->vTexCoords.emplace_back(4, 0);//V9
-
-
-    return mesh;
-}
-
 Mesh* Mesh:: generaContCubo(GLdouble ld) {
     Mesh* mesh = new Mesh();
     
