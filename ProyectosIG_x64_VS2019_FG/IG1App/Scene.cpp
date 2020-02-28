@@ -8,7 +8,6 @@
 #include "TrianguloRGB.h"
 #include "RectanguloRGB.h"
 #include "Estrella.h"
-#include "Planta.h"
 #include "Caja.h"
 #include "Cristalera.h"
 #include "Suelo.h"
@@ -64,36 +63,26 @@ void Scene::init()
 		cristalera->load("../Bmps/windowV.bmp");
 		gTextures.push_back(cristalera);
 
-		Texture* hierba = new Texture();//grass
-		hierba->load("../Bmps/grass.bmp");
-		gTextures.push_back(hierba);
-
 		//---------------Objetos Escena---
 		Caja* c = new Caja(100);
 		c->setTexture(cajaText);
 		c->setTextInside(cajaInside);
 
-		/*Cristalera* cris = new Cristalera(1000);
-		cris->setTexture(cristalera);*/
+		Cristalera* cris = new Cristalera(1000);
+		cris->setTexture(cristalera);
 
 		Estrella* e = new Estrella(4, 100, 100);
 		e->setTexture(starText);
 		e->changeColor(0.0, 1.0, 0.0, 1.0);
 		Suelo* s = new Suelo(1000, 1000, 20.0, 20.0);
 		s->setTexture(suelo);
-
-		Planta* hierba1 = new Planta(100,100);
-		hierba1->setTexture(hierba);
-		hierba1->setModelMat(translate(hierba1->modelMat(),dvec3(350,100,0)));
-		//RectanguloRGB* hierba2 = new RectanguloRGB(100, 100);
 		
 
 		gObjects.push_back(e);
 		gObjects.push_back(c);
 		gObjects.push_back(s);
 		gObjects.push_back(new EjesRGB(400.0));
-		gObjects.push_back(hierba1);
-		//gObjects.push_back(cris);   //Mejor que esté al final para que se vea a través de él todos los objetos
+		gObjects.push_back(cris);   //Mejor que esté al final para que se vea a través de él todos los objetos
 	}
 }
 
