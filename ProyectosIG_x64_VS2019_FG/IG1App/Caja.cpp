@@ -23,7 +23,6 @@ void Caja::render(glm::dmat4 const& modelViewMat)const {
 		upload(aMat);
 		//Color
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glLineWidth(2);
 		//Textura
 		//--Text Externa
 		glEnable(GL_CULL_FACE);
@@ -40,12 +39,11 @@ void Caja::render(glm::dmat4 const& modelViewMat)const {
 		upload(aMat);
 		//Color
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glLineWidth(2);
 		//Textura
 		suelo->render();
 	}
 	//Reset
 	glDisable(GL_CULL_FACE);
 	if (mTexture != nullptr) mTexture->unbind();
-	glLineWidth(1);
+
 }

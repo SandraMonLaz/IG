@@ -12,7 +12,6 @@ void Foto::render(glm::dmat4 const& modelViewMat) const
 		//Textura
 		if (mTexture != nullptr)mTexture->bind(GL_REPEAT);
 		mMesh->render();
-
 		//Reseteamos los valores
 		glColor3d(1.0, 1.0, 1.0);
 		glLineWidth(1.0);

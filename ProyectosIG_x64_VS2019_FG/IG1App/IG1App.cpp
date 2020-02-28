@@ -141,8 +141,10 @@ void IG1App::key(unsigned char key, int x, int y)
 			animacionActivada = true;
 		else
 			animacionActivada = false;
-
 			break;
+	case 'F':
+		mScene->saveBMP(mScene->fotoT);
+		break;
 	case '0':
 		mScene->setState(0);
 		mCamera->set2D();
@@ -198,10 +200,9 @@ void IG1App::specialKey(int key, int x, int y)
 
 void IG1App::update() {
 
-
 	if (glutGet(GLUT_ELAPSED_TIME) - mLastUpdateTime > 20 && animacionActivada) {
 		mLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
 		mScene->update();
-		glutPostRedisplay();
+		glutPostRedisplay(); 
 	}
 }
