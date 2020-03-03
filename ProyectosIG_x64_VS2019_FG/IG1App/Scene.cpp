@@ -13,6 +13,7 @@
 #include "Foto.h"
 #include "Cristalera.h"
 #include <string>
+#include "Planta.h"
 
 using namespace glm;
 using namespace std;
@@ -66,6 +67,10 @@ void Scene::init()
 		cristal->load("../Bmps/windowV.bmp", 150);
 		gTextures.push_back(cristal);
 
+		Texture* planta = new Texture();
+		planta->load("../Bmps/grass.bmp", glm::u8vec3{0,0,0},0);
+		gTextures.push_back(planta);
+
 		//---------------Objetos Escena---
 		Caja* caja = new Caja(100,cuboInt,300);
 		caja->setTexture(cuboExt);
@@ -83,12 +88,21 @@ void Scene::init()
 		Cristalera* cristalera = new Cristalera(800);
 		cristalera->setTexture(cristal);
 
+		Planta* p = new Planta(100, 100, 1, 1);
+		p->setTexture(planta);
+		p->setModelMat(rotate(p->modelMat(),radians(90.0),dvec3(0,1,0)));
+		Planta* p2 =new Planta(100, 100, 1, 1);
+		p2->setTexture(planta);
+
 		gObjects.push_back(estrella);
 		gObjects.push_back(caja);
 		gObjects.push_back(suelo);
 		gObjects.push_back(foto);
 		gObjects.push_back(new EjesRGB(400.0));
 		gObjectsTran.push_back(cristalera);
+		gObjectsTran.push_back(p);
+		gObjectsTran.push_back(p2);
+
 	}
 }
 
