@@ -22,6 +22,8 @@ class IG1App
 private :
 	GLuint mLastUpdateTime;
 	bool animacionActivada;
+	glm::dvec2 mMouseCoord;
+	int mMouseButt;
 public:  
 	// static single instance (singleton pattern)
 	static IG1App s_ig1app;
@@ -46,6 +48,8 @@ protected:
 	IG1App();
 	~IG1App() { close(); };
 	void update();
+	void mouse(int button, int state, int x, int y);
+	void motion(int x, int y);
 	void init();
 	void iniWinOpenGL();
 	void free();   
@@ -61,7 +65,8 @@ protected:
 	static void s_key(unsigned char key, int x, int y) { s_ig1app.key(key, x, y); };
 	static void s_specialKey(int key, int x, int y) { s_ig1app.specialKey(key, x, y); };
 	static void s_update() { s_ig1app.update(); }
-	
+	static void s_mouse(int button, int state, int x, int y) { s_ig1app.mouse(button,state,x,y); }
+	static void s_motion(int x, int y) { s_ig1app.motion(x, y); }
 	// Viewport position and size
 	Viewport *mViewPort = nullptr;
 	// Camera position, view volume and projection

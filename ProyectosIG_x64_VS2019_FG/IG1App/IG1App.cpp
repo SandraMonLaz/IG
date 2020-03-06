@@ -79,6 +79,8 @@ void IG1App::iniWinOpenGL()
 	glutSpecialFunc(s_specialKey);
 	glutDisplayFunc(s_display);
 	glutIdleFunc(s_update);
+	glutMouseFunc(s_mouse);
+	glutMotionFunc(s_motion);
 	cout << glGetString(GL_VERSION) << '\n';
 	cout << glGetString(GL_VENDOR) << '\n';
 }
@@ -171,21 +173,21 @@ void IG1App::specialKey(int key, int x, int y)
 	switch (key) {
 	case GLUT_KEY_RIGHT:
 		if (mdf == GLUT_ACTIVE_CTRL)
-			mCamera->pitch(-1);   // rotates -1 on the X axis
+			mCamera->moveLR(-2);   // rotates -1 on the X axis
 		else
-			mCamera->pitch(1);    // rotates 1 on the X axis
+			mCamera->moveLR(2);    // rotates 1 on the X axis
 		break;
 	case GLUT_KEY_LEFT:
 		if (mdf == GLUT_ACTIVE_CTRL)
-		    mCamera->yaw(1);      // rotates 1 on the Y axis 
+		    mCamera->moveFB(2);      // rotates 1 on the Y axis 
 		else 
-			mCamera->yaw(-1);     // rotate -1 on the Y axis 
+			mCamera->moveFB(-2);     // rotate -1 on the Y axis 
 		break;
 	case GLUT_KEY_UP:
-		mCamera->roll(1);    // rotates 1 on the Z axis
+		mCamera->moveUD(2);    // rotates 1 on the Z axis
 		break;
 	case GLUT_KEY_DOWN:
-		mCamera->roll(-1);   // rotates -1 on the Z axis
+		mCamera->moveUD(-2);   // rotates -1 on the Z axis
 		break;
 	default:
 		need_redisplay = false;
@@ -205,4 +207,27 @@ void IG1App::update() {
 		mScene->update();
 		glutPostRedisplay(); 
 	}
+}
+
+void IG1App::mouse(int button, int state, int x, int y) {
+	mMouseButt = button;
+	// (x, y) es la posición del ratón en la ventana,
+	// siendo (0,0) la esquina (left, top)
+	// Guardamos las coordenadas del mouse en un atributo de la aplicación
+	mMouseCoord = glm::dvec2(x, mWinH-y);
+}
+
+
+
+void IG1App::motion(int x, int y) {
+	if (mMouseButt == GLUT_LEFT_BUTTON) {
+		// guardamos la anterior posición en var. temp.
+		glm::dvec2 mp = mMouseCoord;
+		// Guardamos la posición actual
+		mMouseCoord = glm::dvec2(x, mWinH - y);
+		mp = (mMouseCoord - mp); // calculamos el desplazamiento realizado
+		mCamera->orbit(mp.x * 0.05, mp.y); // sensitivity = 0.05
+		glutPostRedisplay();
+	}
+	else if (mMouseButt == GLUT_RIGHT_BUTTON) { }
 }

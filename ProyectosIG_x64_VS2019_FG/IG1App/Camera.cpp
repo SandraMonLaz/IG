@@ -14,6 +14,28 @@ Camera::Camera(Viewport* vp): mViewPort(vp), mViewMat(1.0), mProjMat(1.0),
 {
     setPM();
 }
+
+void Camera::setAxes() {
+	mRight = row(mViewMat, 0);
+	mUpward = row(mViewMat, 1);
+	mFront = -row(mViewMat, 2);
+}
+
+void Camera::moveUD(GLdouble cs) { // Up / Down
+	mEye += mUpward * cs;
+	mLook += mUpward * cs;
+	setVM();
+}
+void Camera::moveLR(GLdouble cs) { // Left / Right
+	mEye += mRight * cs;
+	mLook += mRight * cs;
+	setVM();
+}
+void Camera::moveFB(GLdouble cs) { // Forward / Backward
+	mEye += mFront * cs;
+	mLook += mFront * cs;
+	setVM();
+}
 //-------------------------------------------------------------------------
 
 void Camera::uploadVM() const 
@@ -25,7 +47,9 @@ void Camera::uploadVM() const
 
 void Camera::setVM() 
 {
+
 	mViewMat = lookAt(mEye, mLook, mUp);  // glm::lookAt defines the view matrix 
+	setAxes();
 }
 //-------------------------------------------------------------------------
 
@@ -38,6 +62,7 @@ void Camera::set2D()
 }
 //-------------------------------------------------------------------------
 
+
 void Camera::set3D() 
 {
 	mEye = dvec3(500, 500, 500);  
@@ -47,25 +72,25 @@ void Camera::set3D()
 }
 //-------------------------------------------------------------------------
 
-void Camera::pitch(GLdouble a) 
-{  
-	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(1.0, 0, 0));
-	// glm::rotate returns mViewMat * rotationMatrix
-}
-//-------------------------------------------------------------------------
-
-void Camera::yaw(GLdouble a) 
-{
-	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 1.0, 0));
-	// glm::rotate returns mViewMat * rotationMatrix
-}
-//-------------------------------------------------------------------------
-
-void Camera::roll(GLdouble a) 
-{
-	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 0, 1.0));
-	// glm::rotate returns mViewMat * rotationMatrix
-}
+//void Camera::pitch(GLdouble a) 
+//{  
+//	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(1.0, 0, 0));
+//	// glm::rotate returns mViewMat * rotationMatrix
+//}
+////-------------------------------------------------------------------------
+//
+//void Camera::yaw(GLdouble a) 
+//{
+//	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 1.0, 0));
+//	// glm::rotate returns mViewMat * rotationMatrix
+//}
+////-------------------------------------------------------------------------
+//
+//void Camera::roll(GLdouble a) 
+//{
+//	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 0, 1.0));
+//	// glm::rotate returns mViewMat * rotationMatrix
+//}
 //-------------------------------------------------------------------------
 
 void Camera::setSize(GLdouble xw, GLdouble yh) 
@@ -100,6 +125,14 @@ void Camera::uploadPM() const
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixd(value_ptr(mProjMat)); // transfers projection matrix to the GPU
 	glMatrixMode(GL_MODELVIEW);
+}
+
+void Camera::orbit(GLdouble incAng, GLdouble incY) {
+	angle += incAng;
+	mEye.x = mLook.x + cos(radians(angle)) * radio;
+	mEye.z = mLook.z - sin(radians(angle)) * radio;
+	mEye.y += incY;
+	setVM();
 }
 //-------------------------------------------------------------------------
 
