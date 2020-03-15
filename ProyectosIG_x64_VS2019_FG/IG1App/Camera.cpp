@@ -55,7 +55,7 @@ void Camera::setVM()
 
 void Camera::set2D() 
 {
-	mEye = dvec3(0, 0, 500);
+	mEye = dvec3(0, 0, 600);
 	mLook = dvec3(0, 0, 0);
 	mUp = dvec3(0, 1, 0);
 	angle = 0;
@@ -118,8 +118,13 @@ void Camera::setScale(GLdouble s)
 void Camera::setPM() 
 {
 	if (bOrto) { //  if orthogonal projection
+		mNearVal = 1;
 		mProjMat = ortho(xLeft*mScaleFact, xRight*mScaleFact, yBot*mScaleFact, yTop*mScaleFact, mNearVal, mFarVal);
 		// glm::ortho defines the orthogonal projection matrix
+	}
+	else {
+		mNearVal = 200;
+		mProjMat = frustum(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, mNearVal, mFarVal);
 	}
 }
 //-------------------------------------------------------------------------
@@ -141,20 +146,17 @@ void Camera::orbit(GLdouble incAng, GLdouble incY) {
 
 
 void Camera::changePrj() {
-	if (mLook == dvec3(0, 0, 0)) {
-		set3D();
-	}
-	else
-		set2D();
+	bOrto = !bOrto;
+	setPM();
 }
 
 
 void Camera::setCenital() {
-	mEye = dvec3(0, 100, 0);
+	mEye = dvec3(0, 500, 0);
 	mLook = dvec3(0, 0, 0);
 	mUp = dvec3(1, 0, 0);
 	angle = 0;
-	radio = 1000;
+	radio = 50;
 	setVM();
 }
 //-------------------------------------------------------------------------

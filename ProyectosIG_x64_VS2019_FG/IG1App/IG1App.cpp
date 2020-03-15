@@ -103,20 +103,19 @@ void IG1App::display() const
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
 	if (dobleVentana) {
-		//resize(mWinW/2,mWinH/2);
+		
 		mViewPort->setSize(mWinW/2, (mWinH/2));
 		mViewPort->setPos(0, mWinH / 3);
 		mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
 
-
-		mViewPort->setSize(mWinW / 2, (mWinH ));
-		mViewPort->setPos(mWinW/ 2,0);
+		mViewPort->setPos(mWinW/ 2, mWinH / 3);
 		mCamera->setCenital();
 		mScene->render(*mCamera);
+
 		mCamera->set3D();
 	}
 	else {
-		mViewPort->setSize(mWinW, (mWinH));
+		mViewPort->setSize(mWinW, mWinH);
 		mViewPort->setPos(0, 0);
 		mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
 	}
