@@ -12,12 +12,15 @@ IG1App IG1App::s_ig1app;  // default constructor (constructor with no parameters
 //-------------------------------------------------------------------------
 
 
-IG1App::IG1App() 
-{ mLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
-animacionActivada = false; }
+IG1App::IG1App()
+{
+	mLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
+	animacionActivada = false;
+	dobleVentana = false;
+}
 
 
-void IG1App::close()  
+void IG1App::close()
 {
 	if (!mStop) {  // if main loop has not stopped
 		cout << "Closing glut...\n";
@@ -41,25 +44,25 @@ void IG1App::run()   // enters the main event processing loop
 void IG1App::init()
 {
 	// create an OpenGL Context
-	iniWinOpenGL();   
+	iniWinOpenGL();
 
 	// create the scene after creating the context 
 	// allocate memory and resources
 	mViewPort = new Viewport(mWinW, mWinH); //glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
 	mCamera = new Camera(mViewPort);
 	mScene = new Scene;
-	
+
 	mCamera->set2D();
 	mScene->init();
 }
 //-------------------------------------------------------------------------
 
-void IG1App::iniWinOpenGL() 
+void IG1App::iniWinOpenGL()
 {  // Initialization
 	cout << "Starting glut...\n";
 	int argc = 0;
 	glutInit(&argc, nullptr);
-		
+
 	glutInitContextVersion(3, 3);
 	glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);  // GLUT_CORE_PROFILE
 	glutInitContextFlags(GLUT_DEBUG);		// GLUT_FORWARD_COMPATIBLE
@@ -70,9 +73,9 @@ void IG1App::iniWinOpenGL()
 	//glutInitWindowPosition (140, 140);
 
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH /*| GLUT_STENCIL*/); // RGBA colors, double buffer, depth buffer and stencil buffer   
-	
+
 	mWinId = glutCreateWindow("IG1App");  // with its associated OpenGL context, return window's identifier 
-	
+
 	// Callback registration
 	glutReshapeFunc(s_resize);
 	glutKeyboardFunc(s_key);
@@ -81,12 +84,13 @@ void IG1App::iniWinOpenGL()
 	glutIdleFunc(s_update);
 	glutMouseFunc(s_mouse);
 	glutMotionFunc(s_motion);
+	glutMouseWheelFunc(s_mouseWheel);
 	cout << glGetString(GL_VERSION) << '\n';
 	cout << glGetString(GL_VENDOR) << '\n';
 }
 //-------------------------------------------------------------------------
 
-void IG1App::free() 
+void IG1App::free()
 {  // release memory and resources
 	delete mScene; mScene = nullptr;
 	delete mCamera; mCamera = nullptr;
@@ -94,17 +98,33 @@ void IG1App::free()
 }
 //-------------------------------------------------------------------------
 
-void IG1App::display() const   
+void IG1App::display() const
 {  // double buffering
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
+	if (dobleVentana) {
+		//resize(mWinW/2,mWinH/2);
+		mViewPort->setSize(mWinW/2, (mWinH/2));
+		mViewPort->setPos(0, mWinH / 3);
+		mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
 
-	mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
+
+		mViewPort->setSize(mWinW / 2, (mWinH ));
+		mViewPort->setPos(mWinW/ 2,0);
+		mCamera->setCenital();
+		mScene->render(*mCamera);
+		mCamera->set3D();
+	}
+	else {
+		mViewPort->setSize(mWinW, (mWinH));
+		mViewPort->setPos(0, 0);
+		mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
+	}
 	glutSwapBuffers();	// swaps the front and back buffer
 }
 //-------------------------------------------------------------------------
 
-void IG1App::resize(int newWidth, int newHeight) 
+void IG1App::resize(int newWidth, int newHeight)
 {
 	mWinW = newWidth; mWinH = newHeight;
 
@@ -112,14 +132,14 @@ void IG1App::resize(int newWidth, int newHeight)
 	mViewPort->setSize(newWidth, newHeight);
 
 	// Resize Scene Visible Area such that the scale is not modified
-	mCamera->setSize(mViewPort->width(), mViewPort->height()); 
+	mCamera->setSize(mViewPort->width(), mViewPort->height());
 }
 //-------------------------------------------------------------------------
 
-void IG1App::key(unsigned char key, int x, int y) 
+void IG1App::key(unsigned char key, int x, int y)
 {
 	bool need_redisplay = true;
-	
+
 	switch (key) {
 	case 27:  // Escape key 
 		glutLeaveMainLoop();  // stops main loop and destroy the OpenGL context
@@ -143,9 +163,15 @@ void IG1App::key(unsigned char key, int x, int y)
 			animacionActivada = true;
 		else
 			animacionActivada = false;
-			break;
+		break;
 	case 'F':
 		mScene->saveBMP(mScene->fotoT);
+		break;
+	case 'p':
+		mCamera->changePrj();
+		break;
+	case 'k':
+		dobleVentana = !dobleVentana;
 		break;
 	case '0':
 		mScene->setState(0);
@@ -165,11 +191,11 @@ void IG1App::key(unsigned char key, int x, int y)
 }
 //-------------------------------------------------------------------------
 
-void IG1App::specialKey(int key, int x, int y) 
+void IG1App::specialKey(int key, int x, int y)
 {
 	bool need_redisplay = true;
 	int mdf = glutGetModifiers(); // returns the modifiers (Shift, Ctrl, Alt)
-	
+
 	switch (key) {
 	case GLUT_KEY_RIGHT:
 		if (mdf == GLUT_ACTIVE_CTRL)
@@ -179,9 +205,9 @@ void IG1App::specialKey(int key, int x, int y)
 		break;
 	case GLUT_KEY_LEFT:
 		if (mdf == GLUT_ACTIVE_CTRL)
-		    mCamera->moveFB(2);      // rotates 1 on the Y axis 
-		else 
-			mCamera->moveFB(-2);     // rotate -1 on the Y axis 
+			mCamera->moveLR(2);      // rotates 1 on the Y axis 
+		else
+			mCamera->moveLR(-2);     // rotate -1 on the Y axis 
 		break;
 	case GLUT_KEY_UP:
 		mCamera->moveUD(2);    // rotates 1 on the Z axis
@@ -205,7 +231,7 @@ void IG1App::update() {
 	if (glutGet(GLUT_ELAPSED_TIME) - mLastUpdateTime > 20 && animacionActivada) {
 		mLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
 		mScene->update();
-		glutPostRedisplay(); 
+		glutPostRedisplay();
 	}
 }
 
@@ -214,7 +240,7 @@ void IG1App::mouse(int button, int state, int x, int y) {
 	// (x, y) es la posición del ratón en la ventana,
 	// siendo (0,0) la esquina (left, top)
 	// Guardamos las coordenadas del mouse en un atributo de la aplicación
-	mMouseCoord = glm::dvec2(x, mWinH-y);
+	mMouseCoord = glm::dvec2(x, mWinH - y);
 }
 
 
@@ -229,5 +255,18 @@ void IG1App::motion(int x, int y) {
 		mCamera->orbit(mp.x * 0.05, mp.y); // sensitivity = 0.05
 		glutPostRedisplay();
 	}
-	else if (mMouseButt == GLUT_RIGHT_BUTTON) { }
+	else if (mMouseButt == GLUT_RIGHT_BUTTON) {}
+}
+
+void IG1App::mouseWheel(int n, int d, int x, int y) {
+	int mdf = glutGetModifiers(); // returns the modifiers (Shift, Ctrl, Alt)
+	if (mdf == GLUT_ACTIVE_CTRL) {
+		mCamera->setScale(+0.01 * d);
+	}
+	// d es la dirección de la rueda (+1 / -1)
+	else {
+		if (d == 1) mCamera->moveFB(5);
+		else mCamera->moveFB(-5);
+	}
+	glutPostRedisplay();
 }

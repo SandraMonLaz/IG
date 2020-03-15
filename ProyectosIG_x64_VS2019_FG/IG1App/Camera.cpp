@@ -58,6 +58,8 @@ void Camera::set2D()
 	mEye = dvec3(0, 0, 500);
 	mLook = dvec3(0, 0, 0);
 	mUp = dvec3(0, 1, 0);
+	angle = 0;
+	radio = 1000;
 	setVM();
 }
 //-------------------------------------------------------------------------
@@ -66,7 +68,9 @@ void Camera::set2D()
 void Camera::set3D() 
 {
 	mEye = dvec3(500, 500, 500);  
-	mLook = dvec3(0, 10, 0);   
+	mLook = dvec3(0, 10, 0);  
+	angle = 0;
+	radio = 1000;
 	mUp = dvec3(0, 1, 0);
 	setVM();
 }
@@ -132,6 +136,25 @@ void Camera::orbit(GLdouble incAng, GLdouble incY) {
 	mEye.x = mLook.x + cos(radians(angle)) * radio;
 	mEye.z = mLook.z - sin(radians(angle)) * radio;
 	mEye.y += incY;
+	setVM();
+}
+
+
+void Camera::changePrj() {
+	if (mLook == dvec3(0, 0, 0)) {
+		set3D();
+	}
+	else
+		set2D();
+}
+
+
+void Camera::setCenital() {
+	mEye = dvec3(0, 100, 0);
+	mLook = dvec3(0, 0, 0);
+	mUp = dvec3(1, 0, 0);
+	angle = 0;
+	radio = 1000;
 	setVM();
 }
 //-------------------------------------------------------------------------

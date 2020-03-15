@@ -31,6 +31,8 @@ public:
 	void moveFB(GLdouble cs); // Forward / Backward
 	void moveUD(GLdouble cs); // Up / Down 
 	void orbit(GLdouble incAng, GLdouble incY);
+	void changePrj();
+	void setCenital();
 
 
 	// projection matrix
