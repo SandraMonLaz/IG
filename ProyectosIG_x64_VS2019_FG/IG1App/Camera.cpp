@@ -55,10 +55,10 @@ void Camera::setVM()
 
 void Camera::set2D() 
 {
-	mEye = dvec3(0, 0, 600);
+	mEye = dvec3(0, 0, 500);
 	mLook = dvec3(0, 0, 0);
 	mUp = dvec3(0, 1, 0);
-	angle = 0;
+	angle = -90;
 	radio = 1000;
 	setVM();
 }
@@ -67,10 +67,11 @@ void Camera::set2D()
 
 void Camera::set3D() 
 {
-	mEye = dvec3(500, 500, 500);  
 	mLook = dvec3(0, 10, 0);  
-	angle = 0;
-	radio = 1000;
+	angle = -45;
+	mEye.x = mLook.x + cos(radians(angle)) * radio;
+	mEye.z = mLook.z - sin(radians(angle)) * radio;
+	mEye.y = 500;
 	mUp = dvec3(0, 1, 0);
 	setVM();
 }
@@ -152,7 +153,7 @@ void Camera::changePrj() {
 
 
 void Camera::setCenital() {
-	mEye = dvec3(0, 500, 0);
+	mEye = dvec3(0, 300, 0);
 	mLook = dvec3(0, 0, 0);
 	mUp = dvec3(1, 0, 0);
 	angle = 0;

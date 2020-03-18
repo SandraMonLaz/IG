@@ -96,6 +96,7 @@ void IG1App::free()
 	delete mCamera; mCamera = nullptr;
 	delete mViewPort; mViewPort = nullptr;
 }
+
 //-------------------------------------------------------------------------
 
 void IG1App::display() const
@@ -103,16 +104,18 @@ void IG1App::display() const
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
 	if (dobleVentana) {
+		Camera auxCam = *mCamera; 
+		Viewport auxVP = *mViewPort; 
 		
-		mViewPort->setSize(mWinW/2, (mWinH/2));
+		mViewPort->setSize(mWinW/2, mWinH/2);
 		mViewPort->setPos(0, mWinH / 3);
-		mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
+		mScene->render(auxCam);  // uploads the viewport and camera to the GPU
 
 		mViewPort->setPos(mWinW/ 2, mWinH / 3);
-		mCamera->setCenital();
-		mScene->render(*mCamera);
+		auxCam.setCenital();
+		mScene->render(auxCam);
 
-		mCamera->set3D();
+		*mViewPort = auxVP;
 	}
 	else {
 		mViewPort->setSize(mWinW, mWinH);
@@ -245,16 +248,19 @@ void IG1App::mouse(int button, int state, int x, int y) {
 
 
 void IG1App::motion(int x, int y) {
+	// guardamos la anterior posición en var. temp.
+	glm::dvec2 mp = mMouseCoord;
+	// Guardamos la posición actual
+	mMouseCoord = glm::dvec2(x, mWinH - y);
+	mp = (mp - mMouseCoord); // calculamos el desplazamiento realizado
 	if (mMouseButt == GLUT_LEFT_BUTTON) {
-		// guardamos la anterior posición en var. temp.
-		glm::dvec2 mp = mMouseCoord;
-		// Guardamos la posición actual
-		mMouseCoord = glm::dvec2(x, mWinH - y);
-		mp = (mMouseCoord - mp); // calculamos el desplazamiento realizado
 		mCamera->orbit(mp.x * 0.05, mp.y); // sensitivity = 0.05
-		glutPostRedisplay();
 	}
-	else if (mMouseButt == GLUT_RIGHT_BUTTON) {}
+	else if (mMouseButt == GLUT_RIGHT_BUTTON) {
+		mCamera->moveLR(mp.x);
+		mCamera->moveUD(mp.y);
+	}
+	glutPostRedisplay();
 }
 
 void IG1App::mouseWheel(int n, int d, int x, int y) {
