@@ -104,18 +104,7 @@ void IG1App::display() const
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
 	if (dobleVentana) {
-		Camera auxCam = *mCamera; 
-		Viewport auxVP = *mViewPort; 
-		
-		mViewPort->setSize(mWinW/2, mWinH/2);
-		mViewPort->setPos(0, mWinH / 3);
-		mScene->render(auxCam);  // uploads the viewport and camera to the GPU
-
-		mViewPort->setPos(mWinW/ 2, mWinH / 3);
-		auxCam.setCenital();
-		mScene->render(auxCam);
-
-		*mViewPort = auxVP;
+		display2Vistas();
 	}
 	else {
 		mViewPort->setSize(mWinW, mWinH);
@@ -123,6 +112,21 @@ void IG1App::display() const
 		mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
 	}
 	glutSwapBuffers();	// swaps the front and back buffer
+}
+
+void IG1App::display2Vistas() const {
+	Camera auxCam = *mCamera;
+	Viewport auxVP = *mViewPort;
+
+	mViewPort->setSize(mWinW / 2, mWinH / 2);
+	mViewPort->setPos(0, mWinH / 3);
+	mScene->render(auxCam);  // uploads the viewport and camera to the GPU
+
+	mViewPort->setPos(mWinW / 2, mWinH / 3);
+	auxCam.setCenital();
+	mScene->render(auxCam);
+
+	*mViewPort = auxVP;
 }
 //-------------------------------------------------------------------------
 
