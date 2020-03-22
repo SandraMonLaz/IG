@@ -8,6 +8,7 @@ private:
 	Texture* txtInterna = nullptr;
 public:
 	Caja(GLdouble ld, Texture* interna, GLdouble ofset);
+	~Caja() { delete suelo;  }
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 

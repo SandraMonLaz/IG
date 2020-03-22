@@ -118,11 +118,12 @@ void IG1App::display2Vistas() const {
 	Camera auxCam = *mCamera;
 	Viewport auxVP = *mViewPort;
 
-	mViewPort->setSize(mWinW / 2, mWinH / 2);
-	mViewPort->setPos(0, mWinH / 3);
+	mViewPort->setSize(mWinW / 2, mWinH );
+	auxCam.setSize(mViewPort->width(),mViewPort->height());
+	mViewPort->setPos(0, 0);
 	mScene->render(auxCam);  // uploads the viewport and camera to the GPU
 
-	mViewPort->setPos(mWinW / 2, mWinH / 3);
+	mViewPort->setPos(mWinW / 2, 0);
 	auxCam.setCenital();
 	mScene->render(auxCam);
 

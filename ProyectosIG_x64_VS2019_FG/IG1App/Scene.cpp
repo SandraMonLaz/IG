@@ -99,9 +99,9 @@ void Scene::init()
 		gObjects.push_back(suelo);
 		gObjects.push_back(foto);
 		gObjects.push_back(new EjesRGB(400.0));
-		gObjectsTran.push_back(cristalera);
 		gObjectsTran.push_back(p);
 		gObjectsTran.push_back(p2);
+		gObjectsTran.push_back(cristalera);
 
 	}
 }
@@ -112,6 +112,7 @@ void Scene::setState(int id) {
 		free();
 		gObjects.clear();
 		gTextures.clear();
+		gObjectsTran.clear();
 		init();
 	}
 }
@@ -124,6 +125,10 @@ void Scene::free()
 	for (Abs_Entity* el : gObjects)
 	{
 		delete el;  el = nullptr;
+	}
+
+	for (Abs_Entity* el : gObjectsTran) {
+		delete el; el = nullptr;
 	}
 
 	for (Texture* el : gTextures)
