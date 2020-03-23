@@ -13,7 +13,7 @@ void Planta::render(glm::dmat4 const& modelViewMat) const {
 		glColor3d(mColor.r, mColor.g, mColor.b);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		//Textura
-		if (mTexture != nullptr)mTexture->bind(GL_REPEAT);
+		if (mTexture != nullptr)mTexture->bind(GL_REPLACE);
 		mMesh->render();
 
 		//Reseteamos los valores

@@ -170,7 +170,7 @@ void Scene::render(Camera const& cam) const
 		el->render(cam.viewMat());
 	}
 	glDepthMask(GL_TRUE);
-	glEnable(GL_BLEND);
+	glDisable(GL_BLEND);
 }
 void Scene::update() {
 	for (Abs_Entity* el : gObjects)

@@ -45,5 +45,6 @@ void Caja::render(glm::dmat4 const& modelViewMat)const {
 	//Reset
 	glDisable(GL_CULL_FACE);
 	if (mTexture != nullptr) mTexture->unbind();
+	if (txtInterna != nullptr) txtInterna->unbind();
 
 }
