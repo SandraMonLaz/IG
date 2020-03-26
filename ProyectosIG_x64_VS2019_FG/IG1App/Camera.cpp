@@ -125,7 +125,9 @@ void Camera::setPM()
 	}
 	else {
 		mNearVal = 200;
-		mProjMat =frustum(-(mNearVal / 2) * (mScaleFact), (mNearVal/2)*(mScaleFact), -(mNearVal / 2),mNearVal/2, mNearVal, mFarVal);
+		mProjMat = frustum(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, mNearVal, mFarVal);
+
+		//mProjMat =frustum(-(mNearVal / 2) * (mScaleFact), (mNearVal/2)*(mScaleFact), -(mNearVal / 2),mNearVal/2, mNearVal, mFarVal);
 
 			//perspective(radians(60), frustum(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, mNearVal, mFarVal), mNearVal, mFarVal);
 			
