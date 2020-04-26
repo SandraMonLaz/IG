@@ -120,6 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AnilloCuadrado.h" />
     <ClInclude Include="Caja.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CheckML.h" />
@@ -142,6 +143,7 @@
     <ClInclude Include="Viewport.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnilloCuadrado.cpp" />
     <ClCompile Include="Caja.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cristalera.cpp" />

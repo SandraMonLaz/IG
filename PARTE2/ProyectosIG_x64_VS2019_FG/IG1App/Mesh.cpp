@@ -234,6 +234,55 @@ Mesh* Mesh::generaPoligono(GLuint numL, GLdouble rd){
     }
     return mesh;
 }
+
+Mesh* Mesh::generaAnilloCuadrado() {
+    Mesh* mesh = new Mesh(); 
+    mesh->mPrimitive = GL_TRIANGLE_STRIP;
+    mesh->mNumVertices = 10;
+    mesh->vVertices.reserve(10);
+    mesh->vColors.reserve(10);
+ /*   static float vertices[] = {
+30.0, 30.0, 0.0,
+10.0, 10.0, 0.0,
+70.0, 30.0, 0.0,
+90.0, 10.0, 0.0,
+70.0, 70.0, 0.0,
+90.0, 90.0, 0.0,
+30.0, 70.0, 0.0,
+10.0, 90.0, 0.0 };
+    static float colors[] = {
+    0.0, 0.0, 0.0, 1.0,
+    1.0, 0.0, 0.0,1.0,
+    0.0, 1.0, 0.0,1.0,
+    0.0, 0.0, 1.0,1.0,
+    1.0, 1.0, 0.0,1.0,
+    1.0, 0.0, 1.0,1.0,
+    0.0, 1.0, 1.0,1.0,
+    1.0, 0.0, 0.0,1.0 };*/
+    mesh->vVertices.emplace_back(glm::dvec3(30.0, 30.0, 0.0));
+    mesh->vVertices.emplace_back(glm::dvec3(10.0, 10.0, 0.0));
+    mesh->vVertices.emplace_back(glm::dvec3(70.0, 30.0, 0.0));
+    mesh->vVertices.emplace_back(glm::dvec3(90.0, 10.0, 0.0));
+    mesh->vVertices.emplace_back(glm::dvec3(70.0, 70.0, 0.0));
+    mesh->vVertices.emplace_back(glm::dvec3(90.0, 90.0, 0.0));
+    mesh->vVertices.emplace_back(glm::dvec3(30.0, 70.0, 0.0));
+    mesh->vVertices.emplace_back(glm::dvec3(10.0, 90.0, 0.0));
+    mesh->vVertices.emplace_back(glm::dvec3(30.0, 30.0, 0.0));
+    mesh->vVertices.emplace_back(glm::dvec3(10.0, 10.0, 0.0));
+
+    mesh->vColors.emplace_back(glm::dvec4(0.0, 0.0, 0.0, 1.0));
+    mesh->vColors.emplace_back(glm::dvec4(1.0, 0.0, 0.0, 1.0));
+    mesh->vColors.emplace_back(glm::dvec4(0.0, 1.0, 0.0, 1.0));
+    mesh->vColors.emplace_back(glm::dvec4(0.0, 0.0, 0.0, 1.0));
+    mesh->vColors.emplace_back(glm::dvec4(1.0, 1.0, 0.0, 1.0));
+    mesh->vColors.emplace_back(glm::dvec4(1.0, 0.0, 1.0, 1.0));
+    mesh->vColors.emplace_back(glm::dvec4(0.0, 1.0, 1.0, 1.0));
+    mesh->vColors.emplace_back(glm::dvec4(1.0, 0.0, 0.0, 1.0));
+    mesh->vColors.emplace_back(glm::dvec4(0.0, 0.0, 0.0, 1.0));
+    mesh->vColors.emplace_back(glm::dvec4(1.0, 0.0, 0.0, 1.0));
+    return mesh;
+}
+
 Mesh * Mesh::createRGBAxes(GLdouble l)
 {
   Mesh* mesh = new Mesh();

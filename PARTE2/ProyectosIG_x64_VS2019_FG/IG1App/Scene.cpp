@@ -15,6 +15,7 @@
 #include <string>
 #include "Planta.h"
 #include "QuadricEntity.h"
+#include "AnilloCuadrado.h"
 
 using namespace glm;
 using namespace std;
@@ -38,6 +39,8 @@ void Scene::init()
 	else if (mId == 2) {
 		escena2();
 	}
+	else if (mId == 3)
+		escena3();
 }
 void Scene::escena0() {
 	Poligono* cir = new Poligono(100, 200);
@@ -115,7 +118,7 @@ void Scene::escena1() {
 }
 void Scene::escena2() {
 	Sphere* sphere = new Sphere(200);
-	sphere->setColor(glm::fvec3(1, 1, 1));
+	sphere->setColor(glm::fvec3(210.0f/255.0f, 105.0f/255.0f, 30.0f/255.0f));
 
 	Cylinder* eyeL = new Cylinder(20, 0, 50);
 	eyeL->setColor(glm::fvec3(0, 1, 1));
@@ -123,7 +126,7 @@ void Scene::escena2() {
 	eyeL->setModelMat(rotate(eyeL->modelMat(), radians(60.0), dvec3(0, 1, 0)));
 
 	Cylinder* eyeR = new Cylinder(20, 0, 50);
-	eyeR->setColor(glm::fvec3(0, 1, 1));
+	eyeR->setColor(glm::fvec3(32.0f/255.0f, 178.0f/255.0f, 170.0f/255.0f));
 	eyeR->setModelMat(translate(glm::dmat4(1), dvec3(80, 80, 160)));
 	eyeR->setModelMat(rotate(eyeR->modelMat(), radians(30.0), dvec3(0, 1, 0)));
 
@@ -133,6 +136,7 @@ void Scene::escena2() {
 	hat->setModelMat(rotate(hat->modelMat(), radians(90.0), dvec3(1, 0, 0)));
 
 	PartialDisk* smile = new PartialDisk(120, 140, 90, 180, 10);
+	smile->setColor(glm::fvec3(0.0f, 1.0f, 0.0f));
 	smile->setModelMat(translate(glm::dmat4(1), dvec3(110, 0, 110)));
 	smile->setModelMat(rotate(smile->modelMat(), radians(45.0), dvec3(0, 1, 0)));
 	// Graphics objects (entities) of the scene
@@ -142,6 +146,12 @@ void Scene::escena2() {
 	gObjects.push_back(eyeR);
 	gObjects.push_back(hat);
 	gObjects.push_back(smile);
+}
+
+void Scene::escena3() {
+	AnilloCuadrado* c = new AnilloCuadrado();
+	gObjects.push_back(new EjesRGB(400.0));
+	gObjects.push_back(c);
 }
 
 void Scene::setState(int id) {
@@ -194,7 +204,7 @@ void Scene::free()
 void Scene::setGL()
 {
 	// OpenGL basic setting
-	if (mId == 2)	glClearColor(0.7, 0.8, 0.9, 0.0);  // background color (alpha=1 -> opaque)
+	if (mId == 2 || mId==3)	glClearColor(0.7, 0.8, 0.9, 0.0);  // background color (alpha=1 -> opaque)
 	else glClearColor(0.0, 0.0, 0.0, 1.0);  // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D);  // disable textures
