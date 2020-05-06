@@ -16,6 +16,7 @@
 #include "Planta.h"
 #include "QuadricEntity.h"
 #include "AnilloCuadrado.h"
+#include "EntityWithIndexMesh.h"
 
 using namespace glm;
 using namespace std;
@@ -41,6 +42,8 @@ void Scene::init()
 	}
 	else if (mId == 3)
 		escena3();
+	else if (mId == 4)
+		escena4();
 }
 void Scene::escena0() {
 	Poligono* cir = new Poligono(100, 200);
@@ -154,6 +157,13 @@ void Scene::escena3() {
 	gObjects.push_back(c);
 }
 
+void Scene::escena4()
+{
+	EntityWithIndexMesh* c = new EntityWithIndexMesh();
+	gObjects.push_back(new EjesRGB(400.0));
+	gObjects.push_back(c);
+}
+
 void Scene::setState(int id) {
 	if (mId != id) {
 		mId = id;
@@ -204,7 +214,7 @@ void Scene::free()
 void Scene::setGL()
 {
 	// OpenGL basic setting
-	if (mId == 2 || mId==3)	glClearColor(0.7, 0.8, 0.9, 0.0);  // background color (alpha=1 -> opaque)
+	if (mId == 2 || mId==3 || mId == 4)	glClearColor(0.7, 0.8, 0.9, 0.0);  // background color (alpha=1 -> opaque)
 	else glClearColor(0.0, 0.0, 0.0, 1.0);  // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D);  // disable textures

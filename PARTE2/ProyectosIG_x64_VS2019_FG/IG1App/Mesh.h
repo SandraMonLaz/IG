@@ -36,6 +36,9 @@ public:
 	GLuint size() const { return mNumVertices; };   // number of elements
 	std::vector<glm::dvec3> const& vertices() const { return vVertices; };
 	std::vector<glm::dvec4> const& colors() const { return vColors; };
+	std::vector<glm::dvec3> const& normals() const { return vNormals; };
+
+	void setNormals(std::vector<glm::dvec3> const& n) { vNormals = n; }
 	
 		
 protected:
@@ -44,6 +47,8 @@ protected:
 	GLuint mNumVertices = 0;  // number of elements ( = vVertices.size())
 	std::vector<glm::dvec3> vVertices;  // vertex array
 	std::vector<glm::dvec4> vColors;    // color array
+	std::vector<GLuint> vIndices;    // color array
+	std::vector<glm::dvec3> vNormals;    // normals array
 	std::vector<glm::dvec2> vTexCoords;      //Textures vector     
 	virtual void draw() const;
 };

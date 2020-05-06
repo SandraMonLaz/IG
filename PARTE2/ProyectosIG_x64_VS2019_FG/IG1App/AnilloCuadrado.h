@@ -5,7 +5,6 @@ class AnilloCuadrado : public Abs_Entity
 public:
 	AnilloCuadrado();
 	~AnilloCuadrado() {};
-	virtual void draw() const;
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 private:
 
