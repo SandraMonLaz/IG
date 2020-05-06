@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "IndexMesh.h"
 class AnilloCuadrado : public Abs_Entity	
 {
 public:

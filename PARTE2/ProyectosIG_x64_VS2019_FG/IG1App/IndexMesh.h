@@ -3,13 +3,16 @@
 class IndexMesh : public Mesh
 {
 protected:
-	GLuint* indices = nullptr; // tabla de índices
-	GLuint nNumIndices = 0;
+	std::vector<GLuint> vIndices;    // color array
+	GLuint nNumIndices = 36;
 public:
-	IndexMesh(GLuint* i): Mesh() { mPrimitive = GL_TRIANGLES; indices = i; }
-	~IndexMesh() { delete indices; }
+	IndexMesh(std::vector<GLuint> v) : Mesh() { mPrimitive = GL_TRIANGLES; vIndices = v; }
+	~IndexMesh() {}
 	virtual void render() const;
 	virtual void draw() const;
+	static IndexMesh* generaAnilloCuadrado();
+	void buildNormalVector();
+
 
 	static IndexMesh* generaIndexCuboConTapas(GLdouble l);
 };

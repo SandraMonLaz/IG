@@ -2,7 +2,7 @@
 
 AnilloCuadrado::AnilloCuadrado() :Abs_Entity()
 {
-	mMesh = Mesh::generaAnilloCuadrado();
+	mMesh = IndexMesh::generaAnilloCuadrado();
 	
 }
 

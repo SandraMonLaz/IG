@@ -8,13 +8,7 @@ using namespace glm;
 
 void Mesh::draw() const 
 {
-	if (vIndices.size() > 0) {
-		glDrawElements(GL_TRIANGLE_STRIP, 10, GL_UNSIGNED_INT, vIndices.data());
-
-	}
-	else {
-		glDrawArrays(mPrimitive, 0, size());   // primitive graphic, first index and number of elements to be rendered
-	}
+		glDrawArrays(mPrimitive, 0, size());   // primitive graphic, first index and number of elements to be rendere
 }
 //-------------------------------------------------------------------------
 
@@ -247,54 +241,7 @@ Mesh* Mesh::generaPoligono(GLuint numL, GLdouble rd){
     return mesh;
 }
 
-Mesh* Mesh::generaAnilloCuadrado() {
-    Mesh* mesh = new Mesh(); 
-    mesh->mPrimitive = GL_TRIANGLE_STRIP;
-    mesh->mNumVertices = 8;
-    mesh->vVertices.reserve(8);
-    mesh->vColors.reserve(8);	
-    mesh->vIndices.reserve(10);	
 
-	mesh->vIndices.emplace_back(0);
-	mesh->vIndices.emplace_back(1);
-	mesh->vIndices.emplace_back(2);
-	mesh->vIndices.emplace_back(3);
-	mesh->vIndices.emplace_back(4);
-	mesh->vIndices.emplace_back(5);
-	mesh->vIndices.emplace_back(6);
-	mesh->vIndices.emplace_back(7);
-	mesh->vIndices.emplace_back(0);
-	mesh->vIndices.emplace_back(1);
-
-    mesh->vVertices.emplace_back(glm::dvec3(30.0, 30.0, 0.0));
-    mesh->vVertices.emplace_back(glm::dvec3(10.0, 10.0, 0.0));
-    mesh->vVertices.emplace_back(glm::dvec3(70.0, 30.0, 0.0));
-    mesh->vVertices.emplace_back(glm::dvec3(90.0, 10.0, 0.0));
-    mesh->vVertices.emplace_back(glm::dvec3(70.0, 70.0, 0.0));
-    mesh->vVertices.emplace_back(glm::dvec3(90.0, 90.0, 0.0));
-    mesh->vVertices.emplace_back(glm::dvec3(30.0, 70.0, 0.0));
-    mesh->vVertices.emplace_back(glm::dvec3(10.0, 90.0, 0.0));
-
-    mesh->vColors.emplace_back(glm::dvec4(0.0, 0.0, 0.0, 1.0));
-    mesh->vColors.emplace_back(glm::dvec4(1.0, 0.0, 0.0, 1.0));
-    mesh->vColors.emplace_back(glm::dvec4(0.0, 1.0, 0.0, 1.0));
-    mesh->vColors.emplace_back(glm::dvec4(0.0, 0.0, 0.0, 1.0));
-    mesh->vColors.emplace_back(glm::dvec4(1.0, 1.0, 0.0, 1.0));
-    mesh->vColors.emplace_back(glm::dvec4(1.0, 0.0, 1.0, 1.0));
-    mesh->vColors.emplace_back(glm::dvec4(0.0, 1.0, 1.0, 1.0));
-    mesh->vColors.emplace_back(glm::dvec4(1.0, 0.0, 0.0, 1.0));
-
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-
-    return mesh;
-}
 
 Mesh * Mesh::createRGBAxes(GLdouble l)
 {

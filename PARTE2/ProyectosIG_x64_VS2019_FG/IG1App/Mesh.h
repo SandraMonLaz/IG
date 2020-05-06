@@ -24,7 +24,7 @@ public:
 	static Mesh* generaEstrellaTexCor(GLdouble re, GLuint np, GLdouble h);
 	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	static Mesh* generaCajaTexCor(GLdouble nl);
-	static Mesh* generaAnilloCuadrado();
+
 	Mesh() {};
 	virtual ~Mesh() {};
 
@@ -47,7 +47,6 @@ protected:
 	GLuint mNumVertices = 0;  // number of elements ( = vVertices.size())
 	std::vector<glm::dvec3> vVertices;  // vertex array
 	std::vector<glm::dvec4> vColors;    // color array
-	std::vector<GLuint> vIndices;    // color array
 	std::vector<glm::dvec3> vNormals;    // normals array
 	std::vector<glm::dvec2> vTexCoords;      //Textures vector     
 	virtual void draw() const;
