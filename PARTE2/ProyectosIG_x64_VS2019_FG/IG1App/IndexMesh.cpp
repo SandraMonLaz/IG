@@ -59,15 +59,6 @@ IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble l)
 	mesh->vVertices.emplace_back(l / 2, l / 2, -l / 2);  //v6
 	mesh->vVertices.emplace_back(-l / 2, l / 2, -l / 2);  // v7
 
-	mesh->vNormals.emplace_back(1, 1, -1);
-	mesh->vNormals.emplace_back(1, -1, -1);
-	mesh->vNormals.emplace_back(1, 1, 1);
-	mesh->vNormals.emplace_back(1, -1, 1);
-	mesh->vNormals.emplace_back(-1, 1, 1);
-	mesh->vNormals.emplace_back(-1, -1, 1);
-	mesh->vNormals.emplace_back(-1, 1, -1);
-	mesh->vNormals.emplace_back(-1, -1, -1);
-
 	mesh->vColors.emplace_back(1, 0, 0, 1);
 	mesh->vColors.emplace_back(1, 0, 0, 1);
 	mesh->vColors.emplace_back(1, 0, 0, 1);
@@ -92,7 +83,6 @@ IndexMesh* IndexMesh::generaAnilloCuadrado() {
 	mesh->vVertices.reserve(8);
 	mesh->vColors.reserve(8);
 	mesh->vIndices.reserve(10);
-
 
 	mesh->vVertices.emplace_back(glm::dvec3(30.0, 30.0, 0.0));
 	mesh->vVertices.emplace_back(glm::dvec3(10.0, 10.0, 0.0));
@@ -126,21 +116,20 @@ IndexMesh* IndexMesh::generaAnilloCuadrado() {
 
 
 void IndexMesh::buildNormalVector() {
-	for (int q = 0; q < 8; q++) {
-		vNormals.push_back(glm::dvec3(0,0,0));
+	for (int q = 0; q < vVertices.size(); q++) {
+		vNormals.emplace_back(glm::dvec3(0, 0, 0));
 	}
 	//n = normalize(cross((v2 - v1), (v0 - v1)))
 	for (int i = 0; i < vIndices.size()/3; i++) {
-		glm::dvec3 v2 = vVertices.at(vIndices.at((i * 3) + 2));
-		glm::dvec3 v1 = vVertices.at(vIndices.at((i * 3) + 1));
-		glm::dvec3 v0 = vVertices.at(vIndices.at((i * 3) ));
-		auto a = normalize(cross(v2-v1, v0-v1));
-		vNormals.at(vVertices.at(vIndices.at(3*i))) += a;
-		vNormals.at(vIndices.at((3*i)+1)) += a;
-		vNormals.at(vIndices.at((3*i)+2)) += a;
+		glm::dvec3 a = vVertices.at(vIndices.at(i * 3));
+		glm::dvec3 b = vVertices.at(vIndices.at(i * 3 + 1));
+		glm::dvec3 c = vVertices.at(vIndices.at(i * 3 + 2));
+		glm::dvec3 normal = normalize(cross(b-a,c-a));
 
-}
-
+		vNormals[vIndices.at(i * 3 + 2)] += normal;
+		vNormals[vIndices.at(i * 3 + 1)] += normal;
+		vNormals[vIndices.at(i * 3 + 0)] += normal;
+	}
 	for (int p = 0; p < vNormals.size(); p++) {
 		vNormals.at(p) = normalize(vNormals.at(p));
 	}
