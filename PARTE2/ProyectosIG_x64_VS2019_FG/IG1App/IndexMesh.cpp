@@ -38,9 +38,16 @@ void IndexMesh::draw() const {
 	}
 }
 
-IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble l)
+IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble ld)
 {
-	std::vector<GLuint> stripIndices({ 0,1,2,2,3,0,1,5,6,6,2,1,7,6,5,5,4,7,4,0,3,3,7,4,4,5,1,1,0,4,3,2,6,6,7,3 });
+
+	std::vector<GLuint> stripIndices({
+		0,1,2, 2,1,3,
+		2,3,4, 4,3,5,
+		4,5,6, 6,5,7,
+		6,7,0, 0,7,1,
+		4,6,2, 2,6,0,
+		1,7,3, 3,7,5 });
 	
 	IndexMesh* mesh = new IndexMesh(stripIndices);
 
@@ -49,15 +56,15 @@ IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble l)
 	mesh->vColors.reserve(mesh->mNumVertices);
 	mesh->vIndices.reserve(36);
 
-
-	mesh->vVertices.emplace_back(-l / 2, -l / 2, l / 2); //v0
-	mesh->vVertices.emplace_back(l / 2, -l / 2, l / 2); //v1
-	mesh->vVertices.emplace_back(l / 2, l / 2, l / 2); // v2
-	mesh->vVertices.emplace_back(-l / 2, l / 2, l / 2);  //v3-
-	mesh->vVertices.emplace_back(-l / 2, -l / 2, -l / 2);  //v4
-	mesh->vVertices.emplace_back(l / 2, -l / 2, -l / 2); //v5
-	mesh->vVertices.emplace_back(l / 2, l / 2, -l / 2);  //v6
-	mesh->vVertices.emplace_back(-l / 2, l / 2, -l / 2);  // v7
+	//vertices caja Parte1
+	mesh->vVertices.emplace_back(-ld / 2, ld / 2, ld / 2); //v0
+	mesh->vVertices.emplace_back(-ld / 2, -ld / 2, ld / 2); //v1
+	mesh->vVertices.emplace_back(ld / 2, ld / 2, ld / 2); // v2
+	mesh->vVertices.emplace_back(ld / 2, -ld / 2, ld / 2);  //v3
+	mesh->vVertices.emplace_back(ld / 2, ld / 2, -ld / 2);  //v4
+	mesh->vVertices.emplace_back(ld / 2, -ld / 2, -ld / 2); //v5
+	mesh->vVertices.emplace_back(-ld / 2, ld / 2, -ld / 2);  //v6
+	mesh->vVertices.emplace_back(-ld / 2, -ld / 2, -ld / 2);  // v7
 
 	mesh->vColors.emplace_back(1, 0, 0, 1);
 	mesh->vColors.emplace_back(1, 0, 0, 1);
