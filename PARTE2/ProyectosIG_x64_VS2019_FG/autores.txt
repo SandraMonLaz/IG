@@ -1,3 +1,7 @@
 Autores:
 David Czepiel 
 Sandra Mondragón Lázaro
+
+Información sobre la práctica:
+Escena del anillo cuadrado = tecla 3
+Escena del cubo iluminado = tecla 4

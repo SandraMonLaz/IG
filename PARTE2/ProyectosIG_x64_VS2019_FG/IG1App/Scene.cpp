@@ -218,6 +218,7 @@ void Scene::setGL()
 	else glClearColor(0.0, 0.0, 0.0, 1.0);  // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D);  // disable textures
+	glEnable(GL_COLOR_MATERIAL);
 }
 //-------------------------------------------------------------------------
 void Scene::resetGL()
@@ -233,7 +234,6 @@ void Scene::render(Camera const& cam) const
 {
 	cam.upload();
 	if(mId > 1)sceneDirLight(cam);
-	glEnable(GL_COLOR_MATERIAL);
 	for (Abs_Entity* el : gObjects)
 	{
 		el->render(cam.viewMat());
