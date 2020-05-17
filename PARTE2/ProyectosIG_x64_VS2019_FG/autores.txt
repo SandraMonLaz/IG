@@ -5,3 +5,7 @@ Sandra Mondragón Lázaro
 Información sobre la práctica:
 Escena del anillo cuadrado = tecla 3
 Escena del cubo iluminado = tecla 4
+Escena del avion = tecla 5
+Escena del cono = tecla 6
+Escena de las esferas = tecla 7
+Escena del avión encima de la esfera = tecla 8
