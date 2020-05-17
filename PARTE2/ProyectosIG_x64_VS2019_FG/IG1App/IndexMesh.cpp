@@ -4,7 +4,9 @@ using namespace glm;
 
 void IndexMesh::render() const
 {
+	
 	if (vVertices.size() > 0) {  // transfer data
+		
 	// transfer the coordinates of the vertices
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, GL_DOUBLE, 0, vVertices.data());  // number of coordinates per vertex, type of each coordinate, stride, pointer 
@@ -29,7 +31,8 @@ void IndexMesh::render() const
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
-		glDisableClientState(GL_INDEX_ARRAY);
+		glDisableClientState(GL_INDEX_ARRAY);	
+	
 	}
 }
 void IndexMesh::draw() const {
@@ -38,7 +41,7 @@ void IndexMesh::draw() const {
 	}
 }
 
-IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble ld)
+IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble ld , glm::dvec4 color)
 {
 
 	std::vector<GLuint> stripIndices({
@@ -66,14 +69,15 @@ IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble ld)
 	mesh->vVertices.emplace_back(-ld / 2, ld / 2, -ld / 2);  //v6
 	mesh->vVertices.emplace_back(-ld / 2, -ld / 2, -ld / 2);  // v7
 
-	mesh->vColors.emplace_back(1, 0, 0, 1);
-	mesh->vColors.emplace_back(1, 0, 0, 1);
-	mesh->vColors.emplace_back(1, 0, 0, 1);
-	mesh->vColors.emplace_back(1, 0, 0, 1);
-	mesh->vColors.emplace_back(1, 0, 0, 1);
-	mesh->vColors.emplace_back(1, 0, 0, 1);
-	mesh->vColors.emplace_back(1, 0, 0, 1);
-	mesh->vColors.emplace_back(1, 0, 0, 1);
+	mesh->vColors.emplace_back(color);
+	mesh->vColors.emplace_back(color);
+	mesh->vColors.emplace_back(color);
+	mesh->vColors.emplace_back(color);
+	mesh->vColors.emplace_back(color);
+	mesh->vColors.emplace_back(color);
+	mesh->vColors.emplace_back(color);
+	mesh->vColors.emplace_back(color);
+
 	mesh->buildNormalVector();
 
 
@@ -141,3 +145,5 @@ void IndexMesh::buildNormalVector() {
 		vNormals.at(p) = normalize(vNormals.at(p));
 	}
 }
+
+

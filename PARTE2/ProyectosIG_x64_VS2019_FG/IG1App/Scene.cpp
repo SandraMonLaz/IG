@@ -17,6 +17,7 @@
 #include "QuadricEntity.h"
 #include "AnilloCuadrado.h"
 #include "EntityWithIndexMesh.h"
+#include "CompoundEntity.h"
 
 using namespace glm;
 using namespace std;
@@ -44,6 +45,14 @@ void Scene::init()
 		escena3();
 	else if (mId == 4)
 		escena4();
+	else if (mId == 5)
+		escena5();
+	else if (mId == 6)
+		escena6();
+	else if (mId == 7)
+		escena7();
+	else if (mId == 8)
+		escena8();
 }
 void Scene::escena0() {
 	Poligono* cir = new Poligono(100, 200);
@@ -157,11 +166,102 @@ void Scene::escena3() {
 	gObjects.push_back(c);
 }
 
+//Cubo Rojo
 void Scene::escena4()
 {
-	EntityWithIndexMesh* c = new EntityWithIndexMesh();
+	Cubo* c = new Cubo(glm::dvec4(1.0f,0.0f,0.0f,1.0f));
 	gObjects.push_back(new EjesRGB(400.0));
 	gObjects.push_back(c);
+}
+//Avion
+void Scene::escena5()
+{
+	//Helices---------------------------------------
+	Cylinder* heliceIzq = new Cylinder(200,100,400);
+	heliceIzq->setColor(glm::fvec3(0.0f,0.0f,1.0f));
+	heliceIzq->setModelMat(rotate(dmat4(1), radians(90.0), dvec3(0, 1, 0)));
+
+	Cylinder* heliceDcha = new Cylinder(200,100,400);
+	heliceDcha->setColor(glm::fvec3(0.0f, 0.0f, 1.0f));
+	heliceDcha->setModelMat(rotate(dmat4(1), radians(-90.0), dvec3(0, 1, 0)));
+
+	CompoundEntity* helices = new CompoundEntity();
+	helices->addEntity(heliceDcha);
+	helices->addEntity(heliceIzq);
+	helices->setModelMat(translate(glm::dmat4(1), dvec3(0, 0, 230)));
+	helices->setModelMat(scale(helices->modelMat(), glm::dvec3(0.3, 0.2, 0.2)));
+	//Chasis---------------------------------------
+	Sphere* bola = new Sphere(200);
+	bola->setColor(glm::fvec3(1.0f, 0.0f, 0.0f));
+	CompoundEntity* chasis = new CompoundEntity();
+	chasis->addEntity(bola);
+	chasis->addEntity(helices);
+	//Alas---------------------------------------
+	Cubo* alas = new Cubo(glm::dvec4(0.0f, 1.0f, 0.0f, 1.0f));
+	alas->setModelMat(scale(glm::dmat4(1), glm::dvec3(8, 0.4, 2)));
+	CompoundEntity* avion = new CompoundEntity();
+	avion->addEntity(alas);
+	avion->addEntity(chasis);
+
+	gObjects.push_back(new EjesRGB(400.0));
+	gObjects.push_back(avion);
+}
+//Cono
+void Scene::escena6()
+{
+	Cono* cono = new Cono(100, 50, 12, glm::dvec4(0.0f, 0.0f, 1.0f, 1.0f));
+	gObjects.push_back(new EjesRGB(400.0));
+	gObjects.push_back(cono);
+}
+//Esferas
+void Scene::escena7()
+{
+	Esfera* esfera = new Esfera(20, 200, 20, glm::dvec4(0.0f, 0.0f, 1.0f, 1.0f));
+	esfera->setModelMat(translate(glm::dmat4(1), dvec3(0, 0,400)));
+	Sphere* sphere = new Sphere(200);
+	sphere->setColor(glm::fvec3(0.0f, 0.0f, 1.0f));
+	sphere->setModelMat(translate(glm::dmat4(1), dvec3(400, 0, 0)));
+	gObjects.push_back(new EjesRGB(400.0));
+	gObjects.push_back(esfera);
+	gObjects.push_back(sphere);
+}
+
+void Scene::escena8()
+{
+	//Helices---------------------------------------
+	Cylinder* heliceIzq = new Cylinder(200, 100, 400);
+	heliceIzq->setColor(glm::fvec3(0.0f, 0.0f, 1.0f));
+	heliceIzq->setModelMat(rotate(dmat4(1), radians(90.0), dvec3(0, 1, 0)));
+
+	Cylinder* heliceDcha = new Cylinder(200, 100, 400);
+	heliceDcha->setColor(glm::fvec3(0.0f, 0.0f, 1.0f));
+	heliceDcha->setModelMat(rotate(dmat4(1), radians(-90.0), dvec3(0, 1, 0)));
+
+	CompoundEntity* helices = new CompoundEntity();
+	helices->addEntity(heliceDcha);
+	helices->addEntity(heliceIzq);
+	helices->setModelMat(translate(glm::dmat4(1), dvec3(0, 0, 230)));
+	helices->setModelMat(scale(helices->modelMat(), glm::dvec3(0.3, 0.2, 0.2)));
+	//Chasis---------------------------------------
+	Sphere* bola = new Sphere(200);
+	bola->setColor(glm::fvec3(1.0f, 0.0f, 0.0f));
+	CompoundEntity* chasis = new CompoundEntity();
+	chasis->addEntity(bola);
+	chasis->addEntity(helices);
+	//Alas---------------------------------------
+	Cubo* alas = new Cubo(glm::dvec4(0.0f, 1.0f, 0.0f, 1.0f));
+	alas->setModelMat(scale(glm::dmat4(1), glm::dvec3(8, 0.4, 2)));
+	CompoundEntity* avion = new CompoundEntity();
+	avion->addEntity(alas);
+	avion->addEntity(chasis);
+	avion->setModelMat(scale(dmat4(1), glm::dvec3(0.3, 0.3, 0.3)));
+	avion->setModelMat(translate(avion->modelMat(), dvec3(0, 700, 0)));
+
+	Esfera* esfera = new Esfera(20, 150, 20, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
+
+	gObjects.push_back(new EjesRGB(400.0));
+	gObjects.push_back(avion);
+	gObjects.push_back(esfera);
 }
 
 void Scene::setState(int id) {
@@ -214,7 +314,7 @@ void Scene::free()
 void Scene::setGL()
 {
 	// OpenGL basic setting
-	if (mId == 2 || mId==3 || mId == 4)	glClearColor(0.7, 0.8, 0.9, 0.0);  // background color (alpha=1 -> opaque)
+	if (mId > 1)	glClearColor(0.7, 0.8, 0.9, 0.0);  // background color (alpha=1 -> opaque)
 	else glClearColor(0.0, 0.0, 0.0, 1.0);  // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D);  // disable textures
@@ -223,7 +323,7 @@ void Scene::setGL()
 //-------------------------------------------------------------------------
 void Scene::resetGL()
 {
-	 glClearColor(.0, .0, .0, .0);  // background color (alpha=1 -> opaque)
+	glClearColor(.0, .0, .0, .0);  // background color (alpha=1 -> opaque)
 	glDisable(GL_DEPTH_TEST);  // disable Depth test 	
 	glDisable(GL_TEXTURE_2D);  // disable textures
 	glDisable(GL_COLOR_MATERIAL);

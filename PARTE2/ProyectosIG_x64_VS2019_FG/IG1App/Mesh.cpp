@@ -41,6 +41,7 @@ void Mesh::render() const
    
   }
 }
+
 //-------------------------------------------------------------------------
 Mesh* Mesh::generaEstrellaTexCor(GLdouble re, GLuint np, GLdouble h) {
     Mesh* mesh = new Mesh();

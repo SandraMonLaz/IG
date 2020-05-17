@@ -124,6 +124,7 @@
     <ClInclude Include="Caja.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CheckML.h" />
+    <ClInclude Include="CompoundEntity.h" />
     <ClInclude Include="Cristalera.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityWithIndexMesh.h" />
@@ -131,6 +132,7 @@
     <ClInclude Include="Foto.h" />
     <ClInclude Include="IG1App.h" />
     <ClInclude Include="IndexMesh.h" />
+    <ClInclude Include="MbR.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Pixmap32RGBA.h" />
     <ClInclude Include="Planta.h" />
@@ -148,6 +150,7 @@
     <ClCompile Include="AnilloCuadrado.cpp" />
     <ClCompile Include="Caja.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CompoundEntity.cpp" />
     <ClCompile Include="Cristalera.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityWithIndexMesh.cpp" />
@@ -156,6 +159,7 @@
     <ClCompile Include="IG1App.cpp" />
     <ClCompile Include="IndexMesh.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MbR.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Pixmap32RGBA.cpp" />
     <ClCompile Include="Planta.cpp" />

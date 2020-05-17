@@ -8,3 +8,4 @@ void EntityWithIndexMesh::render(glm::dmat4 const& modelViewMat) const
 		mMesh->render();
 	}
 }
+

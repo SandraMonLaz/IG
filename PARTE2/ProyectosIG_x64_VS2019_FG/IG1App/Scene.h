@@ -38,6 +38,10 @@ protected:
 	void escena2();
 	void escena3();
 	void escena4();
+	void escena5();
+	void escena6();
+	void escena7();
+	void escena8();
 	void sceneDirLight(Camera const& cam) const;
 	void free();
 	void setGL();

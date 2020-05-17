@@ -37,8 +37,9 @@ public:
 	std::vector<glm::dvec3> const& vertices() const { return vVertices; };
 	std::vector<glm::dvec4> const& colors() const { return vColors; };
 	std::vector<glm::dvec3> const& normals() const { return vNormals; };
-
+	
 	void setNormals(std::vector<glm::dvec3> const& n) { vNormals = n; }
+
 	
 		
 protected:

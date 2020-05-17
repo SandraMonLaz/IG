@@ -200,6 +200,22 @@ void IG1App::key(unsigned char key, int x, int y)
 		mScene->setState(4);
 		mCamera->set3D();
 		break;
+	case '5':
+		mScene->setState(5);
+		mCamera->set3D();
+		break;
+	case '6':
+		mScene->setState(6);
+		mCamera->set3D();
+		break;
+	case '7':
+		mScene->setState(7);
+		mCamera->set3D();
+		break;
+	case '8':
+		mScene->setState(8);
+		mCamera->set3D();
+		break;
 	default:
 		need_redisplay = false;
 		break;

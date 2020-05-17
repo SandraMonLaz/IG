@@ -6,6 +6,7 @@ protected:
 	std::vector<GLuint> vIndices;    // color array
 	GLuint nNumIndices = 36;
 public:
+	IndexMesh() : Mesh() {}
 	IndexMesh(std::vector<GLuint> v) : Mesh() { mPrimitive = GL_TRIANGLES; vIndices = v; }
 	~IndexMesh() {}
 	virtual void render() const;
@@ -13,7 +14,6 @@ public:
 	static IndexMesh* generaAnilloCuadrado();
 	void buildNormalVector();
 
-
-	static IndexMesh* generaIndexCuboConTapas(GLdouble l);
+	static IndexMesh* generaIndexCuboConTapas(GLdouble l, glm::dvec4 color);
 };
 
