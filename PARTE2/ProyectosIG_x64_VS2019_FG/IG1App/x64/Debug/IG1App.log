@@ -1,1 +1,6 @@
-﻿
+﻿  Scene.cpp
+F:\Desarrollo de Videojuegos\2 CURSO\IG\PARTE2\ProyectosIG_x64_VS2019_FG\IG1App\Scene.cpp(107,43): warning C4244: 'argumento': conversión de 'double' a 'GLuint'; posible pérdida de datos
+F:\Desarrollo de Videojuegos\2 CURSO\IG\PARTE2\ProyectosIG_x64_VS2019_FG\IG1App\Scene.cpp(107,37): warning C4244: 'argumento': conversión de 'double' a 'GLuint'; posible pérdida de datos
+F:\Desarrollo de Videojuegos\2 CURSO\IG\PARTE2\ProyectosIG_x64_VS2019_FG\IG1App\Scene.cpp(369,46): warning C4305: 'argumento': truncamiento de 'double' a 'GLclampf'
+F:\Desarrollo de Videojuegos\2 CURSO\IG\PARTE2\ProyectosIG_x64_VS2019_FG\IG1App\Scene.cpp(433,37): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+  IG1App.vcxproj -> F:\Desarrollo de Videojuegos\2 CURSO\IG\PARTE2\ProyectosIG_x64_VS2019_FG\bin\IG1AppDebug.exe

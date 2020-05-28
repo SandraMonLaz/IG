@@ -257,7 +257,7 @@ void Scene::escena8()
 	avion->setModelMat(scale(dmat4(1), glm::dvec3(0.3, 0.3, 0.3)));
 	avion->setModelMat(translate(avion->modelMat(), dvec3(0, 700, 0)));
 
-	Esfera* esfera = new Esfera(30, 150, 30, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
+	Esfera* esfera = new Esfera(120, 150, 120, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
 
 	gObjects.push_back(new EjesRGB(400.0));
 	gObjects.push_back(avion);
