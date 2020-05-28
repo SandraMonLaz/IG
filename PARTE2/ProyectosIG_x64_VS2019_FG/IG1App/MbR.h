@@ -5,7 +5,7 @@ class MbR :	public IndexMesh
 public:
 	MbR(int n, glm::dvec3* perfil, int m) : IndexMesh(), n(n), perfil(perfil), m(m) {}
 	~MbR() { delete[] perfil; }
-	static MbR* generaIndexMeshByRevolution(int mm, int nn, glm::dvec3* perfil, glm::dvec4 color);
+	static MbR* generaIndexMeshByRevolution(int mm, int nn, glm::dvec3* perfil);
 
 private:
 	int n; //nº de muestras

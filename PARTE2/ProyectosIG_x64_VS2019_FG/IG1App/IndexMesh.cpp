@@ -8,6 +8,7 @@ void IndexMesh::render() const
 	if (vVertices.size() > 0) {  // transfer data
 		
 	// transfer the coordinates of the vertices
+		
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, GL_DOUBLE, 0, vVertices.data());  // number of coordinates per vertex, type of each coordinate, stride, pointer 
 		if (vColors.size() > 0) { // transfer colors
@@ -41,7 +42,7 @@ void IndexMesh::draw() const {
 	}
 }
 
-IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble ld , glm::dvec4 color)
+IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble ld)
 {
 
 	std::vector<GLuint> stripIndices({
@@ -56,7 +57,6 @@ IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble ld , glm::dvec4 color)
 
 	mesh->mNumVertices = 8;
 	mesh->vVertices.reserve(mesh->mNumVertices);
-	mesh->vColors.reserve(mesh->mNumVertices);
 	mesh->vIndices.reserve(36);
 
 	//vertices caja Parte1
@@ -69,14 +69,6 @@ IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble ld , glm::dvec4 color)
 	mesh->vVertices.emplace_back(-ld / 2, ld / 2, -ld / 2);  //v6
 	mesh->vVertices.emplace_back(-ld / 2, -ld / 2, -ld / 2);  // v7
 
-	mesh->vColors.emplace_back(color);
-	mesh->vColors.emplace_back(color);
-	mesh->vColors.emplace_back(color);
-	mesh->vColors.emplace_back(color);
-	mesh->vColors.emplace_back(color);
-	mesh->vColors.emplace_back(color);
-	mesh->vColors.emplace_back(color);
-	mesh->vColors.emplace_back(color);
 
 	mesh->buildNormalVector();
 

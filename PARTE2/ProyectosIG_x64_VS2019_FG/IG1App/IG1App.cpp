@@ -180,6 +180,29 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'k':
 		dobleVentana = !dobleVentana;
 		break;
+	case 'q':
+		mScene->setLuzDireccionalActivada(true);
+		break;
+	case 'w':
+		mScene->setLuzDireccionalActivada(false);
+		break;
+	case 'a':
+		mScene->setLuzPosicionalActivada(true);
+		break;
+	case 's':
+		mScene->setLuzPosicionalActivada(false);
+		break;
+	case 'z':
+		mScene->setLuzFocalActivada(true);
+		break;
+	case 'x':
+		mScene->setLuzFocalActivada(false);
+		break;
+	case 'e':
+	{
+		mScene->ApagarEscena();
+	}
+		break;
 	case '0':
 		mScene->setState(0);
 		mCamera->set2D();

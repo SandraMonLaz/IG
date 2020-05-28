@@ -5,25 +5,31 @@
 class EntityWithIndexMesh :	public Abs_Entity
 {
 public:
-	EntityWithIndexMesh() : Abs_Entity() {
+	EntityWithIndexMesh(glm::dvec4 color) : Abs_Entity(),color(color) {
 		
 	}	
 	~EntityWithIndexMesh() {};
 	virtual void render(glm::dmat4 const& modelViewMat) const;
-	
+protected:
+	glm::dvec4 color;
 };
 
 class Cubo : public EntityWithIndexMesh
 {
 public:
-	Cubo(glm::dvec4 color) :EntityWithIndexMesh(){
-		mMesh = IndexMesh::generaIndexCuboConTapas(100,color);
+	Cubo(glm::dvec4 color) :EntityWithIndexMesh(color){
+		mMesh = IndexMesh::generaIndexCuboConTapas(100);
+		copper = true;
 	}
 	~Cubo() {};
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+	void setCopper(bool b) { copper = b; }
+	private:
+	bool copper;
 };
 class Cono : public EntityWithIndexMesh {
 public:
-	Cono(GLdouble h, GLdouble r, GLuint n, glm::dvec4 color) :EntityWithIndexMesh() {
+	Cono(GLdouble h, GLdouble r, GLuint n, glm::dvec4 color) :EntityWithIndexMesh(color) {
 		// h=altura del cono, r=radio de la base
 		// n=número de muestras, m=número de puntos del perfil
 		int m = 3;
@@ -31,14 +37,14 @@ public:
 		perfil[0] = glm::dvec3(0.5, 0.0, 0.0);
 		perfil[1] = glm::dvec3(r, 0.0, 0.0);
 		perfil[2] = glm::dvec3(0.5, h, 0.0);
-		mMesh = MbR::generaIndexMeshByRevolution(m, n, perfil, color);
+		mMesh = MbR::generaIndexMeshByRevolution(m, n, perfil);
 	}
 	~Cono() {};
 };
 
 class Esfera : public EntityWithIndexMesh {
 public:
-	Esfera(GLuint m,GLdouble r, GLuint n, glm::dvec4 color) :EntityWithIndexMesh() {
+	Esfera(GLuint m,GLdouble r, GLuint n, glm::dvec4 color) :EntityWithIndexMesh(color) {
 		// h=altura del cono, r=radio de la base
 		// n=número de muestras, m=número de puntos del perfil
 		glm::dvec3* perfil = new glm::dvec3[m + 2];
@@ -48,7 +54,13 @@ public:
 			double y = sin(glm::radians(angle * i)) * r;
 			perfil[i] = glm::dvec3(y, -x, 0.0);
 		}
-		mMesh = MbR::generaIndexMeshByRevolution(m + 2, n, perfil, color);
+		mMesh = MbR::generaIndexMeshByRevolution(m + 2, n, perfil);
+		gold = false;
 	}
 	~Esfera() {};
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+	void setGold(bool b) { gold = b; }
+private:
+	bool gold;
+
 };

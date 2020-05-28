@@ -257,7 +257,7 @@ void Scene::escena8()
 	avion->setModelMat(scale(dmat4(1), glm::dvec3(0.3, 0.3, 0.3)));
 	avion->setModelMat(translate(avion->modelMat(), dvec3(0, 700, 0)));
 
-	Esfera* esfera = new Esfera(20, 150, 20, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
+	Esfera* esfera = new Esfera(30, 150, 30, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
 
 	gObjects.push_back(new EjesRGB(400.0));
 	gObjects.push_back(avion);
@@ -276,18 +276,70 @@ void Scene::setState(int id) {
 }
 
 void Scene::sceneDirLight(Camera const& cam) const {
+		glEnable(GL_LIGHTING);
+	if (luzDireccionalActivada) {
+		glEnable(GL_LIGHT0);
+		glm::fvec4 posDir = { 1, 1, 1, 0 };
+		glMatrixMode(GL_MODELVIEW);
+		glLoadMatrixd(value_ptr(cam.viewMat()));
+		glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(posDir));
+		glm::fvec4 ambient = { 0, 0, 0, 1 };
+		glm::fvec4 diffuse = { 1, 1, 1, 1 };
+		glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
+		glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
+		glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
+	}
+	else {
+		glDisable(GL_LIGHT0);
+	}
+}
+void Scene::scenePosLight(Camera const& cam) const {
 	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glm::fvec4 posDir = { 1, 1, 1, 0 };
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixd(value_ptr(cam.viewMat()));
-	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(posDir));
-	glm::fvec4 ambient = { 0, 0, 0, 1 };
-	glm::fvec4 diffuse = { 1, 1, 1, 1 };
-	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
-	glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
-	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
+	if (luzPosicionalActivada) {
+		glEnable(GL_LIGHT1);
+		glm::fvec4 posDir = { 500, 500, 0, 1 };
+		glMatrixMode(GL_MODELVIEW);
+		glLoadMatrixd(value_ptr(cam.viewMat()));
+		glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(posDir));
+		glm::fvec4 ambient = { 0, 0, 0, 1 };
+		glm::fvec4 diffuse = { 0.5, 1, 0, 1 };
+		glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
+		glLightfv(GL_LIGHT1, GL_AMBIENT, value_ptr(ambient));
+		glLightfv(GL_LIGHT1, GL_DIFFUSE, value_ptr(diffuse));
+		glLightfv(GL_LIGHT1, GL_SPECULAR, value_ptr(specular));
+	}
+	else {
+		glDisable(GL_LIGHT1);
+	}
+}
+
+//Focal
+void Scene::sceneSpotLight(Camera const& cam) const {
+	glEnable(GL_LIGHTING);
+	if (luzFocalActivada) {
+		glEnable(GL_LIGHT2);
+		glm::fvec4 posDir = { 0, 0,220, 1 };
+		glMatrixMode(GL_MODELVIEW);
+		glLoadMatrixd(value_ptr(cam.viewMat()));
+		//glShadeModel(GL_SMOOTH);
+		glLightfv(GL_LIGHT2, GL_POSITION, value_ptr(posDir));
+		glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 45.0);
+		glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 0.0);
+		glm::fvec3  dir = { 0.0, 0.0, -1.0 };
+		glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, value_ptr(dir));
+
+		glm::fvec4 ambient = { 0, 0, 0, 1 };
+		glm::fvec4 diffuse = { 1, 2, 0, 1 };
+		glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
+		glLightfv(GL_LIGHT2, GL_AMBIENT, value_ptr(ambient));
+		glLightfv(GL_LIGHT2, GL_DIFFUSE, value_ptr(diffuse));
+		glLightfv(GL_LIGHT2, GL_SPECULAR, value_ptr(specular));
+
+	}
+	else {
+		glDisable(GL_LIGHT2);
+	}
 }
 
 
@@ -319,6 +371,7 @@ void Scene::setGL()
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D);  // disable textures
 	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_NORMALIZE);
 }
 //-------------------------------------------------------------------------
 void Scene::resetGL()
@@ -327,13 +380,18 @@ void Scene::resetGL()
 	glDisable(GL_DEPTH_TEST);  // disable Depth test 	
 	glDisable(GL_TEXTURE_2D);  // disable textures
 	glDisable(GL_COLOR_MATERIAL);
+	glDisable(GL_NORMALIZE);
 }
 //-------------------------------------------------------------------------
 
 void Scene::render(Camera const& cam) const
 {
 	cam.upload();
-	if(mId > 1)sceneDirLight(cam);
+	if (mId > 1) {
+		sceneDirLight(cam);
+		scenePosLight(cam);
+		sceneSpotLight(cam);
+	}
 	for (Abs_Entity* el : gObjects)
 	{
 		el->render(cam.viewMat());
@@ -357,6 +415,26 @@ void Scene::update() {
 void Scene::saveBMP(int texture) {
 	string a = "../Bmps/Foto.bmp";
 	gTextures[texture]->save(a);
+}
+void Scene::ApagarEscena()
+{
+	static bool encendido = true;
+	if (encendido) {
+		luzDireccionalActivada = false;
+		luzPosicionalActivada = false;
+		luzFocalActivada = false;
+		encendido = false;
+
+		GLfloat amb[] = { 0,0,0,1.0 };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+	}
+	else {
+		encendido = true;
+		GLfloat amb[] = { 0.2,0.2,0.2,1.0 };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+		luzDireccionalActivada = true;
+
+	}
 }
 //-------------------------------------------------------------------------
 

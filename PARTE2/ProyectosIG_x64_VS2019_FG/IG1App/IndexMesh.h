@@ -14,6 +14,6 @@ public:
 	static IndexMesh* generaAnilloCuadrado();
 	void buildNormalVector();
 
-	static IndexMesh* generaIndexCuboConTapas(GLdouble l, glm::dvec4 color);
+	static IndexMesh* generaIndexCuboConTapas(GLdouble l);
 };
 

@@ -1,6 +1,6 @@
 #include "MbR.h"
 
-MbR* MbR::generaIndexMeshByRevolution(int mm, int nn, glm::dvec3* perfil, glm::dvec4 color)
+MbR* MbR::generaIndexMeshByRevolution(int mm, int nn, glm::dvec3* perfil)
 {
 	MbR* mesh = new MbR(nn, perfil, mm);
 	mesh->mPrimitive = GL_TRIANGLES;
@@ -8,7 +8,6 @@ MbR* MbR::generaIndexMeshByRevolution(int mm, int nn, glm::dvec3* perfil, glm::d
 	std::vector<glm::dvec3> vertices;
 	vertices.reserve(mesh->mNumVertices);
 	mesh->vVertices.reserve(mesh->mNumVertices);
-	mesh->vColors.reserve(mesh->mNumVertices);
 	
 
 	// Definir el número de vértices como nn*mm
@@ -25,7 +24,6 @@ MbR* MbR::generaIndexMeshByRevolution(int mm, int nn, glm::dvec3* perfil, glm::d
 			GLdouble x = c * perfil[j].x + s * perfil[j].z;
 			GLdouble z = -s * perfil[j].x + c * perfil[j].z;
 			vertices.emplace_back(glm::dvec3(x, perfil[j].y, z));
-			mesh->vColors.emplace_back(color);
 		}
 	}
 	mesh->vVertices = vertices;
