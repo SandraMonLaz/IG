@@ -11,7 +11,7 @@ void EntityWithIndexMesh::render(glm::dmat4 const& modelViewMat) const
 	}
 }
 
-void Esfera::render(glm::dmat4 const& modelViewMat) const
+/*void Esfera::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 	
@@ -38,7 +38,7 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 		glColor3f(1, 1, 1);
 
 	}
-}
+}*/
 
 void Cubo::render(glm::dmat4 const& modelViewMat) const
 {

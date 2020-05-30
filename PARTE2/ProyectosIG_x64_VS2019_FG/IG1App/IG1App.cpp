@@ -181,27 +181,40 @@ void IG1App::key(unsigned char key, int x, int y)
 		dobleVentana = !dobleVentana;
 		break;
 	case 'q':
-		mScene->setLuzDireccionalActivada(true);
+		mScene->setLight(true, 0);
 		break;
 	case 'w':
-		mScene->setLuzDireccionalActivada(false);
+		mScene->setLight(false, 0);
 		break;
 	case 'a':
-		mScene->setLuzPosicionalActivada(true);
+		mScene->setLight(true, 1);
 		break;
 	case 's':
-		mScene->setLuzPosicionalActivada(false);
+		mScene->setLight(false, 1);
 		break;
 	case 'z':
-		mScene->setLuzFocalActivada(true);
+		mScene->setLight(true, 2);
 		break;
 	case 'x':
-		mScene->setLuzFocalActivada(false);
+		mScene->setLight(false, 2);
+		break;
+	case 't':
+		mScene->setLight(true, 3);
+		break;
+	case 'g':
+		mScene->setLight(false, 3);
+		break;
+	case 'd':
+		mScene->setLight(true, 4);
+		break;
+	case 'f':
+		mScene->setLight(false, 4);
 		break;
 	case 'e':
-	{
 		mScene->ApagarEscena();
-	}
+		break;
+	case 'y':
+		mScene->move();
 		break;
 	case '0':
 		mScene->setState(0);

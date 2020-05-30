@@ -10,6 +10,8 @@
 #include "Texture.h"
 
 #include <vector>
+#include "Light.h"
+#include "Avion.h"
 
 //-------------------------------------------------------------------------
 
@@ -19,8 +21,22 @@ public:
 	enum {
 		starText, sueloT, cuboExt, cuboInt, fotoT, cristal
 	};
-	Scene() { mId = 0; luzDireccionalActivada = true; luzPosicionalActivada = false; luzFocalActivada = false; };
-	~Scene() { free(); resetGL(); };
+	Scene() { mId = 0; luzDireccionalActivada = false; luzPosicionalActivada = false; luzFocalActivada = false; luzFocalAvionActivada = false; };
+	~Scene() { 
+		free(); resetGL(); 
+	
+		if (positionalLight != nullptr) delete positionalLight;
+		if (spotSceneLight != nullptr) delete spotSceneLight;
+		if (directionalLight != nullptr) delete directionalLight;
+		if (planeLight != nullptr) delete planeLight;
+		if (cameraLight != nullptr) delete cameraLight;
+
+		positionalLight = nullptr;
+		spotSceneLight = nullptr;
+		directionalLight = nullptr;
+		planeLight = nullptr;
+		cameraLight = nullptr;
+	};
 
 	Scene(const Scene& s) = delete;  // no copy constructor
 	Scene& operator=(const Scene& s) = delete;  // no copy assignment
@@ -31,10 +47,9 @@ public:
 	void setState(int id);
 
 	void saveBMP(int texture);
-	void setLuzDireccionalActivada(bool b) { luzDireccionalActivada = b; }
-	void setLuzPosicionalActivada(bool b) { luzPosicionalActivada = b; }
-	void setLuzFocalActivada(bool b) { luzFocalActivada = b; }
+	void setLight(bool encendida, int id);
 	void ApagarEscena();
+	void move();
 
 
 protected:
@@ -61,6 +76,17 @@ protected:
 	bool luzDireccionalActivada;
 	bool luzPosicionalActivada;
 	bool luzFocalActivada;
+	bool luzFocalAvionActivada;
+	bool luzCamaraActivada;
+
+	DirLight* directionalLight = nullptr;
+	PosLight* positionalLight = nullptr;
+	SpotLight* spotSceneLight = nullptr;
+	SpotLight* planeLight = nullptr;
+	PosLight* cameraLight = nullptr;
+	Avion* avion = nullptr;
+
+	void setLights();
 };
 //-------------------------------------------------------------------------
 

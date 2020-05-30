@@ -18,6 +18,7 @@
 #include "AnilloCuadrado.h"
 #include "EntityWithIndexMesh.h"
 #include "CompoundEntity.h"
+#include "EntityWithMaterial.h"
 
 using namespace glm;
 using namespace std;
@@ -228,36 +229,12 @@ void Scene::escena7()
 
 void Scene::escena8()
 {
-	//Helices---------------------------------------
-	Cylinder* heliceIzq = new Cylinder(200, 100, 400);
-	heliceIzq->setColor(glm::fvec3(0.0f, 0.0f, 1.0f));
-	heliceIzq->setModelMat(rotate(dmat4(1), radians(90.0), dvec3(0, 1, 0)));
-
-	Cylinder* heliceDcha = new Cylinder(200, 100, 400);
-	heliceDcha->setColor(glm::fvec3(0.0f, 0.0f, 1.0f));
-	heliceDcha->setModelMat(rotate(dmat4(1), radians(-90.0), dvec3(0, 1, 0)));
-
-	CompoundEntity* helices = new CompoundEntity();
-	helices->addEntity(heliceDcha);
-	helices->addEntity(heliceIzq);
-	helices->setModelMat(translate(glm::dmat4(1), dvec3(0, 0, 230)));
-	helices->setModelMat(scale(helices->modelMat(), glm::dvec3(0.3, 0.2, 0.2)));
-	//Chasis---------------------------------------
-	Sphere* bola = new Sphere(200);
-	bola->setColor(glm::fvec3(1.0f, 0.0f, 0.0f));
-	CompoundEntity* chasis = new CompoundEntity();
-	chasis->addEntity(bola);
-	chasis->addEntity(helices);
-	//Alas---------------------------------------
-	Cubo* alas = new Cubo(glm::dvec4(0.0f, 1.0f, 0.0f, 1.0f));
-	alas->setModelMat(scale(glm::dmat4(1), glm::dvec3(8, 0.4, 2)));
-	CompoundEntity* avion = new CompoundEntity();
-	avion->addEntity(alas);
-	avion->addEntity(chasis);
-	avion->setModelMat(scale(dmat4(1), glm::dvec3(0.3, 0.3, 0.3)));
-	avion->setModelMat(translate(avion->modelMat(), dvec3(0, 700, 0)));
-
+	avion = new Avion();
 	Esfera* esfera = new Esfera(120, 150, 120, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
+	//esfera->setGold(); //Para que esté con matrial y color dorado
+	Material* m = new Material();
+	m->setGold();
+	esfera->setMaterial(m); //Para que este con material y color azul
 
 	gObjects.push_back(new EjesRGB(400.0));
 	gObjects.push_back(avion);
@@ -366,12 +343,16 @@ void Scene::free()
 void Scene::setGL()
 {
 	// OpenGL basic setting
-	if (mId > 1)	glClearColor(0.7, 0.8, 0.9, 0.0);  // background color (alpha=1 -> opaque)
+	if (mId > 1) {
+		glClearColor(0.7, 0.8, 0.9, 0.0);  // background color (alpha=1 -> opaque)
+		setLights();
+	}
 	else glClearColor(0.0, 0.0, 0.0, 1.0);  // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D);  // disable textures
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_NORMALIZE);
+
 }
 //-------------------------------------------------------------------------
 void Scene::resetGL()
@@ -381,6 +362,78 @@ void Scene::resetGL()
 	glDisable(GL_TEXTURE_2D);  // disable textures
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_NORMALIZE);
+	glDisable(GL_LIGHTING);
+}
+void Scene::setLights()
+{
+	glEnable(GL_LIGHTING);
+	//Luz direccional
+	glm::fvec4 posDir = { 1, 1, 1, 0 };
+	glm::fvec4 ambient = { 0, 0, 0, 1 };
+	glm::fvec4 diffuse = { 1, 1, 1, 1 };
+	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
+	if (directionalLight == nullptr) directionalLight = new DirLight();
+	directionalLight->setPosDir(posDir);
+	directionalLight->setAmb(ambient);
+	directionalLight->setDiff(diffuse);
+	directionalLight->setSpecular(specular);
+	luzDireccionalActivada = true;
+
+	//Estas dos luces las ponemos en Disable para que solo se vea la primera
+	//Luz posicional
+	posDir = { 500, 500, 0, 1 };
+	ambient = { 0, 0, 0, 1 };
+	diffuse = { 0.5, 1, 0, 1 };
+	specular = { 0.5, 0.5, 0.5, 1 };
+	if (positionalLight == nullptr) positionalLight = new PosLight();
+	positionalLight->setPosDir(posDir);
+	positionalLight->setAmb(ambient);
+	positionalLight->setDiff(diffuse);
+	positionalLight->setSpecular(specular);
+	positionalLight->disable();
+	luzPosicionalActivada = false;
+
+	//Luz focal
+	posDir = { 0, 0,220, 1 };
+	glm::fvec3  dir = { 0.0, 0.0, -1.0 };
+
+	ambient = { 0, 0, 0, 1 };
+	diffuse = { 1, 2, 0, 1 };
+	specular = { 0.5, 0.5, 0.5, 1 };
+	if (spotSceneLight == nullptr) spotSceneLight = new SpotLight(posDir);
+	spotSceneLight->setAmb(ambient);
+	spotSceneLight->setDiff(diffuse);
+	spotSceneLight->setSpecular(specular);
+	spotSceneLight->setSpot(dir, 45, 0);
+	spotSceneLight->disable();
+	luzFocalActivada = false;
+
+	//Luz focal avion
+	posDir = { 0, 180,0, 1 };
+	dir = { 0.0, -1.0, 0.0 };
+
+	ambient = { 0, 0, 0, 1 };
+	diffuse = { 1, 1, 1, 1 };
+	specular = { 0.5, 0.5, 0.5, 1 };
+	if (planeLight == nullptr) planeLight = new SpotLight(posDir);
+	planeLight->setAmb(ambient);
+	planeLight->setDiff(diffuse);
+	planeLight->setSpecular(specular);
+	planeLight->setSpot(dir, 45, 0);
+	luzFocalAvionActivada = true;
+
+	//Camera
+	posDir = { 500, 500, 0, 1 };
+	ambient = { 0, 0, 0, 1 };
+	diffuse = { 1, 1, 1, 1 };
+	specular = { 0.5, 0.5, 0.5, 1 };
+	if (cameraLight == nullptr) cameraLight = new PosLight();
+	cameraLight->setPosDir(posDir);
+	cameraLight->setAmb(ambient);
+	cameraLight->setDiff(diffuse);
+	cameraLight->setSpecular(specular);
+	cameraLight->disable();
+	luzCamaraActivada = false;
 }
 //-------------------------------------------------------------------------
 
@@ -388,9 +441,11 @@ void Scene::render(Camera const& cam) const
 {
 	cam.upload();
 	if (mId > 1) {
-		sceneDirLight(cam);
-		scenePosLight(cam);
-		sceneSpotLight(cam);
+		if (luzDireccionalActivada) directionalLight->upload(cam.viewMat());
+		if (luzFocalActivada) spotSceneLight->upload(cam.viewMat());
+		if (luzPosicionalActivada)positionalLight->upload(cam.viewMat());
+		if (luzFocalAvionActivada)planeLight->upload(cam.viewMat());
+		if (luzCamaraActivada)cameraLight->upload(dmat4(1.0));
 	}
 	for (Abs_Entity* el : gObjects)
 	{
@@ -416,25 +471,64 @@ void Scene::saveBMP(int texture) {
 	string a = "../Bmps/Foto.bmp";
 	gTextures[texture]->save(a);
 }
+void Scene::setLight(bool encendida, int id)
+{
+	Light* l =  nullptr;
+	switch (id)
+	{
+		case 0: l = directionalLight; luzDireccionalActivada = encendida; break;
+		case 1: l = positionalLight; luzPosicionalActivada = encendida; break;
+		case 2: l = spotSceneLight; luzFocalActivada = encendida; break;
+		case 3: l = planeLight; luzFocalAvionActivada = encendida; break;
+		case 4: l = cameraLight; luzCamaraActivada = encendida; break;
+		default:break;
+	}
+	if (encendida) l->enable();
+	else l->disable();
+		
+}
 void Scene::ApagarEscena()
 {
-	static bool encendido = true;
-	if (encendido) {
-		luzDireccionalActivada = false;
-		luzPosicionalActivada = false;
-		luzFocalActivada = false;
-		encendido = false;
+	if (mId > 1) {
 
-		GLfloat amb[] = { 0,0,0,1.0 };
-		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
-	}
-	else {
-		encendido = true;
-		GLfloat amb[] = { 0.2,0.2,0.2,1.0 };
-		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
-		luzDireccionalActivada = true;
+		static bool encendido = true;
+		if (encendido) {
+			luzDireccionalActivada = false;
+			luzPosicionalActivada = false;
+			luzFocalActivada = false;
+			luzCamaraActivada = false;
+			luzFocalAvionActivada = false;
+			encendido = false;
 
+			GLfloat amb[] = { 0,0,0,1.0 };
+			glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+			directionalLight->disable();
+			positionalLight->disable();
+			spotSceneLight->disable();
+			planeLight->disable();
+			cameraLight->disable();
+		}
+		else {
+			encendido = true;
+			GLfloat amb[] = { 0.2,0.2,0.2,1.0 };
+			glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+			luzDireccionalActivada = true;
+			directionalLight->enable();
+
+		}
 	}
+}
+void Scene::move()
+{
+	static double angle = 0;
+	if (avion != nullptr) avion->move();
+
+	glm::fvec4 posDir = {0, cos(radians(angle)) * 180, sin(radians(angle)) * 180, 1 };
+	glm::fvec3 dir = { 0, -cos(radians(angle)), -sin(radians(angle)) };
+	planeLight->setPosDir(posDir);
+	planeLight->setSpot(dir, 45, 1);
+
+	angle++;
 }
 //-------------------------------------------------------------------------
 
