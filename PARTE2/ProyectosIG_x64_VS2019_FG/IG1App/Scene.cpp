@@ -24,6 +24,32 @@ using namespace glm;
 using namespace std;
 //-------------------------------------------------------------------------
 
+Scene::Scene() {
+	 mId = 0; 
+	 //////////////////LUCES///////////////////////////////////
+	 luzDireccionalActivada = false;  directionalLight = nullptr;
+	 luzPosicionalActivada = false;   positionalLight = nullptr;
+	 luzFocalActivada = false;        spotSceneLight = nullptr;
+	 luzFocalAvionActivada = false;   planeLight = nullptr;
+	 luzCamaraActivada = false;       cameraLight = nullptr;
+}
+
+Scene::~Scene() {
+	free(); resetGL();
+
+	////////////////////////////Desactivo/Destruyo las luces /////////////
+	if (positionalLight != nullptr) delete positionalLight;
+	if (spotSceneLight != nullptr) delete spotSceneLight;
+	if (directionalLight != nullptr) delete directionalLight;
+	if (planeLight != nullptr) delete planeLight;
+	if (cameraLight != nullptr) delete cameraLight;
+	positionalLight = nullptr;
+	spotSceneLight = nullptr;
+	directionalLight = nullptr;
+	planeLight = nullptr;
+	cameraLight = nullptr;
+};
+
 void Scene::init()
 {
 	setGL();  // OpenGL settings
@@ -227,15 +253,22 @@ void Scene::escena7()
 	gObjects.push_back(sphere);
 }
 
+//Escena Planeta/Avion
 void Scene::escena8()
 {
-	avion = new Avion();
-	Esfera* esfera = new Esfera(120, 150, 120, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
-	//esfera->setGold(); //Para que esté con matrial y color dorado
+	int radioEsfera = 150;
+	avion = new Avion(radioEsfera+60, planeLight);
+	Esfera* esfera = new Esfera(120, radioEsfera, 120, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
+
+	/////////////////////////Para que esté con matrial y color dorado///////////////////////////////
+	//esfera->setGold(); 
+	/////////////////////////////////////
+
+	//////////////////////////Para que este con material y color azul//////////////////////////////
 	Material* m = new Material();
 	m->setGold();
-	esfera->setMaterial(m); //Para que este con material y color azul
-
+	////////////////////////////
+	esfera->setMaterial(m); 
 	gObjects.push_back(new EjesRGB(400.0));
 	gObjects.push_back(avion);
 	gObjects.push_back(esfera);
@@ -347,7 +380,11 @@ void Scene::setGL()
 		glClearColor(0.7, 0.8, 0.9, 0.0);  // background color (alpha=1 -> opaque)
 		setLights();
 	}
-	else glClearColor(0.0, 0.0, 0.0, 1.0);  // background color (alpha=1 -> opaque)
+	else {
+		//Para que las escenas que no tienen luz no se vean mal ni raro
+		glDisable(GL_LIGHTING);
+		glClearColor(0.0, 0.0, 0.0, 1.0);  // background color (alpha=1 -> opaque)
+	}
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D);  // disable textures
 	glEnable(GL_COLOR_MATERIAL);
@@ -409,7 +446,7 @@ void Scene::setLights()
 	luzFocalActivada = false;
 
 	//Luz focal avion
-	posDir = { 0, 180,0, 1 };
+	posDir = { 0, 160,0, 1 };
 	dir = { 0.0, -1.0, 0.0 };
 
 	ambient = { 0, 0, 0, 1 };
@@ -419,8 +456,9 @@ void Scene::setLights()
 	planeLight->setAmb(ambient);
 	planeLight->setDiff(diffuse);
 	planeLight->setSpecular(specular);
-	planeLight->setSpot(dir, 45, 0);
-	luzFocalAvionActivada = true;
+	planeLight->setSpot(dir, 20, 1);
+	planeLight->disable();
+	luzFocalAvionActivada = false;
 
 	//Camera
 	posDir = { 500, 500, 0, 1 };
@@ -471,8 +509,10 @@ void Scene::saveBMP(int texture) {
 	string a = "../Bmps/Foto.bmp";
 	gTextures[texture]->save(a);
 }
+//Miro la 
 void Scene::setLight(bool encendida, int id)
 {
+	//Tomo la luz cuyo ID corresponda al que me hyan mandado y la activo/desactivo
 	Light* l =  nullptr;
 	switch (id)
 	{
@@ -484,13 +524,13 @@ void Scene::setLight(bool encendida, int id)
 		default:break;
 	}
 	if (encendida) l->enable();
-	else l->disable();
-		
+	else l->disable();	
 }
 void Scene::ApagarEscena()
 {
 	if (mId > 1) {
 
+		//Se desactivan todas las luces si 
 		static bool encendido = true;
 		if (encendido) {
 			luzDireccionalActivada = false;
@@ -508,6 +548,7 @@ void Scene::ApagarEscena()
 			planeLight->disable();
 			cameraLight->disable();
 		}
+		//Se activa solo la luz direccional
 		else {
 			encendido = true;
 			GLfloat amb[] = { 0.2,0.2,0.2,1.0 };
@@ -520,15 +561,8 @@ void Scene::ApagarEscena()
 }
 void Scene::move()
 {
-	static double angle = 0;
+	//Le aviso al avion para que se mueva y modifique su foco
 	if (avion != nullptr) avion->move();
-
-	glm::fvec4 posDir = {0, cos(radians(angle)) * 180, sin(radians(angle)) * 180, 1 };
-	glm::fvec3 dir = { 0, -cos(radians(angle)), -sin(radians(angle)) };
-	planeLight->setPosDir(posDir);
-	planeLight->setSpot(dir, 45, 1);
-
-	angle++;
 }
 //-------------------------------------------------------------------------
 

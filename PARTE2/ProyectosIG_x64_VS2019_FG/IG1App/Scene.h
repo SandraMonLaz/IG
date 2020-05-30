@@ -21,22 +21,8 @@ public:
 	enum {
 		starText, sueloT, cuboExt, cuboInt, fotoT, cristal
 	};
-	Scene() { mId = 0; luzDireccionalActivada = false; luzPosicionalActivada = false; luzFocalActivada = false; luzFocalAvionActivada = false; };
-	~Scene() { 
-		free(); resetGL(); 
-	
-		if (positionalLight != nullptr) delete positionalLight;
-		if (spotSceneLight != nullptr) delete spotSceneLight;
-		if (directionalLight != nullptr) delete directionalLight;
-		if (planeLight != nullptr) delete planeLight;
-		if (cameraLight != nullptr) delete cameraLight;
-
-		positionalLight = nullptr;
-		spotSceneLight = nullptr;
-		directionalLight = nullptr;
-		planeLight = nullptr;
-		cameraLight = nullptr;
-	};
+	Scene();
+	~Scene();
 
 	Scene(const Scene& s) = delete;  // no copy constructor
 	Scene& operator=(const Scene& s) = delete;  // no copy assignment

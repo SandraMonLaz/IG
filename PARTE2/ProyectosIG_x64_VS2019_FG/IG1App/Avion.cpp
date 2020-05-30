@@ -4,7 +4,7 @@
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
 using namespace glm;
-Avion::Avion() : CompoundEntity(), angle(0), heliceAngle(0)
+Avion::Avion(int r, SpotLight* faro) : CompoundEntity(), angle(0), heliceAngle(0),luzFoco(faro), radioOrbita(r)
 {
 	//Helices---------------------------------------
 	Cylinder* heliceIzq = new Cylinder(200, 100, 400);
@@ -36,17 +36,26 @@ Avion::Avion() : CompoundEntity(), angle(0), heliceAngle(0)
 	CompoundEntity* avion = new CompoundEntity();
 	avion->addEntity(alas);
 	avion->addEntity(chasis);
-	avion->setModelMat(translate(dmat4(1), dvec3(0, 220, 0)));
+	avion->setModelMat(translate(dmat4(1), dvec3(0, radioOrbita, 0)));
 	avion->setModelMat(scale(avion->modelMat(), glm::dvec3(0.2, 0.2, 0.2)));
 
 	this->addEntity(avion);
+
+	double compY = radioOrbita * cos(radians(angle));
+	double compZ = radioOrbita * sin(radians(angle));
+	luzFoco->setPosDir(fvec3(0, compY, compZ));
+	luzFoco->setSpot(fvec3(0.0f, -compY, -compZ), 30, 1);
 }
 
 void Avion::move()
 {
 	this->setModelMat(rotate(dmat4(1), glm::radians(angle), dvec3(1, 0, 0)));
 	angle++;
-	
-	//helicesAvion
+
 	helicesAvion->setModelMat(rotate(helicesAvion->modelMat(), radians(10.0), dvec3(0, 0, 1)));
+
+	double compY = radioOrbita * cos(radians(angle));
+	double compZ = radioOrbita * sin(radians(angle));
+	luzFoco->setPosDir(fvec3(0, compY, compZ));
+	luzFoco->setSpot(fvec3(0.0f, -compY, -compZ), 30, 1);
 }

@@ -3,7 +3,6 @@
 void EntityWithMaterial::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
-
 		glm::dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
 		glColor3f(color.r, color.g, color.b);
