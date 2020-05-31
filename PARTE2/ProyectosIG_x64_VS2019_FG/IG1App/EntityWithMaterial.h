@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "MbR.h"
 #include "Material.h"
+
 class EntityWithMaterial :	public Abs_Entity
 {
 public:
@@ -17,16 +18,16 @@ protected:
 };
 class Esfera : public EntityWithMaterial {
 public:
-	Esfera(GLuint m, GLdouble r, GLuint p, glm::dvec4 color) :EntityWithMaterial(color) {
-		int n = p + 2;
-		glm::dvec3* vertices = new glm::dvec3[n + 2];
-		for (int i = 0; i <= n; ++i) {
-			GLdouble theta = i * 180 / (n);
-			GLdouble c = cos(glm::radians(theta));
-			GLdouble s = sin(glm::radians(theta));
-			vertices[i] = glm::dvec3(r * s, -r * c, 0.0);
+	Esfera(GLuint p, GLdouble r, GLuint m, glm::dvec4 color) :EntityWithMaterial(color) {
+		glm::dvec3* vertices = new glm::dvec3[p];
+		double radX = 0, radY = 3 * glm::pi<double>() / 2;
+
+		for (int i = 0; i < p; ++i) {
+			vertices[i]=(glm::dvec3(0.5 + r * sin(radX), r * sin(radY), 0.0));
+			radX += glm::pi<double>() / (p - 1);
+			radY += glm::pi<double>() / (p - 1);
 		}
-		mMesh = MbR::generaIndexMeshByRevolution(n + 2, m, vertices);
+		mMesh = MbR::generaIndexMeshByRevolution(m, p, vertices);
 	}
 	~Esfera() {};
 	void setGold() {
