@@ -49,11 +49,13 @@ Avion::Avion(int r, SpotLight* faro) : CompoundEntity(), angle(0), heliceAngle(0
 
 void Avion::move()
 {
+	//Rotamos el objeto desde el pivote del (0,0,0)
 	this->setModelMat(rotate(dmat4(1), glm::radians(angle), dvec3(1, 0, 0)));
 	angle++;
-
+	//Rotamos las hélices con un angulo de 10º
 	helicesAvion->setModelMat(rotate(helicesAvion->modelMat(), radians(10.0), dvec3(0, 0, 1)));
 
+	//Movemos la luz conforme al avión apuntando al origen
 	double compY = radioOrbita * cos(radians(angle));
 	double compZ = radioOrbita * sin(radians(angle));
 	luzFoco->setPosDir(fvec3(0, compY, compZ));

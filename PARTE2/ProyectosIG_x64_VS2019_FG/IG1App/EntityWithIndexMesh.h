@@ -13,7 +13,7 @@ public:
 protected:
 	glm::dvec4 color;
 };
-
+//-------------------------------------------------------------------------
 class Cubo : public EntityWithIndexMesh
 {
 public:
@@ -27,6 +27,7 @@ public:
 	private:
 	bool copper;
 };
+//-------------------------------------------------------------------------
 class Cono : public EntityWithIndexMesh {
 public:
 	Cono(GLdouble h, GLdouble r, GLuint n, glm::dvec4 color) :EntityWithIndexMesh(color) {

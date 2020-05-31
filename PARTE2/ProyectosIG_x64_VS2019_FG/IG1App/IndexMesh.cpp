@@ -86,7 +86,7 @@ IndexMesh* IndexMesh::generaAnilloCuadrado() {
 	mesh->vVertices.reserve(8);
 	mesh->vColors.reserve(8);
 	mesh->vIndices.reserve(10);
-
+	//---------------------VERTICES---------------------------
 	mesh->vVertices.emplace_back(glm::dvec3(30.0, 30.0, 0.0));
 	mesh->vVertices.emplace_back(glm::dvec3(10.0, 10.0, 0.0));
 	mesh->vVertices.emplace_back(glm::dvec3(70.0, 30.0, 0.0));
@@ -95,7 +95,7 @@ IndexMesh* IndexMesh::generaAnilloCuadrado() {
 	mesh->vVertices.emplace_back(glm::dvec3(90.0, 90.0, 0.0));
 	mesh->vVertices.emplace_back(glm::dvec3(30.0, 70.0, 0.0));
 	mesh->vVertices.emplace_back(glm::dvec3(10.0, 90.0, 0.0));
-
+	//---------------------COLORES---------------------------
 	mesh->vColors.emplace_back(glm::dvec4(0.0, 0.0, 0.0, 1.0));
 	mesh->vColors.emplace_back(glm::dvec4(1.0, 0.0, 0.0, 1.0));
 	mesh->vColors.emplace_back(glm::dvec4(0.0, 1.0, 0.0, 1.0));
@@ -104,15 +104,6 @@ IndexMesh* IndexMesh::generaAnilloCuadrado() {
 	mesh->vColors.emplace_back(glm::dvec4(1.0, 0.0, 1.0, 1.0));
 	mesh->vColors.emplace_back(glm::dvec4(0.0, 1.0, 1.0, 1.0));
 	mesh->vColors.emplace_back(glm::dvec4(1.0, 0.0, 0.0, 1.0));
-
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
-	mesh->vVertices.emplace_back(glm::dvec3(0.0, 0.0, 1.0));
 
 	return mesh;
 }

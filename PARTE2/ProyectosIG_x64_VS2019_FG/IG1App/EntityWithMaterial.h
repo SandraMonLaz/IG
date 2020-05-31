@@ -18,18 +18,6 @@ protected:
 class Esfera : public EntityWithMaterial {
 public:
 	Esfera(GLuint m, GLdouble r, GLuint p, glm::dvec4 color) :EntityWithMaterial(color) {
-		// h=altura del cono, r=radio de la base
-		// n=número de muestras, m=número de puntos del perfil
-
-		/*glm::dvec3* perfil = new glm::dvec3[m + 2];
-		double angle = 180 / m;
-		for (int i = 0; i < m + 1 ; i++) {
-			double x = cos(glm::radians(angle * i)) * r;
-			double y = sin(glm::radians(angle * i)) * r;
-			perfil[i] = glm::dvec3(y, -x, 0.0);
-		}*/
-
-		//mMesh = MbR::generaIndexMeshByRevolution(m+4, n, perfil);
 		int n = p + 2;
 		glm::dvec3* vertices = new glm::dvec3[n + 2];
 		for (int i = 0; i <= n; ++i) {

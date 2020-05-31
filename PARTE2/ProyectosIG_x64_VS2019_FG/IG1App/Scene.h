@@ -36,8 +36,7 @@ public:
 	void setLight(bool encendida, int id);
 	void ApagarEscena();
 	void move();
-
-
+	
 protected:
 	int mId;
 	void escena0();
@@ -58,19 +57,22 @@ protected:
 
 	std::vector<Abs_Entity*> gObjects;  // Entities (graphic objects) of the scene
 	std::vector<Abs_Entity*> gObjectsTran;  // Entities (graphic objects tran) of the scene
-	std::vector<Texture*> gTextures;    
+	std::vector<Texture*> gTextures; 
+
 	bool luzDireccionalActivada;
 	bool luzPosicionalActivada;
 	bool luzFocalActivada;
 	bool luzFocalAvionActivada;
 	bool luzCamaraActivada;
 
-	DirLight* directionalLight = nullptr;
-	PosLight* positionalLight = nullptr;
-	SpotLight* spotSceneLight = nullptr;
-	SpotLight* planeLight = nullptr;
-	PosLight* cameraLight = nullptr;
-	Avion* avion = nullptr;
+	//Luces de la escena
+	DirLight* directionalLight;
+	PosLight* positionalLight;
+	SpotLight* spotSceneLight;
+	SpotLight* planeLight;
+	PosLight* cameraLight;
+
+	Avion* avion; //Referencia al avisón de la escena 8
 
 	void setLights();
 };

@@ -32,6 +32,8 @@ Scene::Scene() {
 	 luzFocalActivada = false;        spotSceneLight = nullptr;
 	 luzFocalAvionActivada = false;   planeLight = nullptr;
 	 luzCamaraActivada = false;       cameraLight = nullptr;
+
+	 avion = nullptr;
 }
 
 Scene::~Scene() {
@@ -43,6 +45,7 @@ Scene::~Scene() {
 	if (directionalLight != nullptr) delete directionalLight;
 	if (planeLight != nullptr) delete planeLight;
 	if (cameraLight != nullptr) delete cameraLight;
+
 	positionalLight = nullptr;
 	spotSceneLight = nullptr;
 	directionalLight = nullptr;
@@ -507,12 +510,14 @@ void Scene::update() {
 }
 void Scene::saveBMP(int texture) {
 	string a = "../Bmps/Foto.bmp";
-	gTextures[texture]->save(a);
+	if(texture < gTextures.size() && gTextures[texture]!=nullptr)
+		gTextures[texture]->save(a);
 }
-//Miro la 
+// - encendida = bool que nos indica si queremos que la luz esté activada
+// - id = luz a la que quieres hacer referencia  para activar o desactivar
 void Scene::setLight(bool encendida, int id)
 {
-	//Tomo la luz cuyo ID corresponda al que me hyan mandado y la activo/desactivo
+	//Tomo la luz cuyo ID corresponda al que me hayan mandado y la activo/desactivo
 	Light* l =  nullptr;
 	switch (id)
 	{
@@ -523,8 +528,10 @@ void Scene::setLight(bool encendida, int id)
 		case 4: l = cameraLight; luzCamaraActivada = encendida; break;
 		default:break;
 	}
-	if (encendida) l->enable();
-	else l->disable();	
+	if (l != nullptr) {
+		if (encendida) l->enable();
+		else l->disable();	
+	}
 }
 void Scene::ApagarEscena()
 {
@@ -539,7 +546,7 @@ void Scene::ApagarEscena()
 			luzCamaraActivada = false;
 			luzFocalAvionActivada = false;
 			encendido = false;
-
+			//Ponemos ambient en negro
 			GLfloat amb[] = { 0,0,0,1.0 };
 			glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 			directionalLight->disable();
@@ -555,7 +562,6 @@ void Scene::ApagarEscena()
 			glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 			luzDireccionalActivada = true;
 			directionalLight->enable();
-
 		}
 	}
 }

@@ -9,10 +9,9 @@ CompoundEntity::~CompoundEntity()
 
 void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
 {
+	glm::dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+	upload(aMat);
 	for (auto& go : gObjects) {
-		glm::dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
-		upload(aMat);
-		go->render(aMat);
-		
+		go->render(aMat);	
 	}
 }
