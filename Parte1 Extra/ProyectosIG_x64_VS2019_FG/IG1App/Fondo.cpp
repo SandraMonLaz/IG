@@ -13,12 +13,26 @@ void Fondo::render()
 	camera->upload();
 
 	glPolygonMode(GL_FRONT, GL_FILL);
+
+	//if (textura != nullptr) textura->bind(GL_REPLACE);              ///EXTRA 1
 	//Textura
-	if (textura != nullptr)textura->bind(GL_REPLACE);
+	if (textura != nullptr)textura->bind(GL_TEXTURE0, GL_DECAL);
+	if (secondTexture != nullptr)secondTexture->bind(GL_TEXTURE1, GL_DECAL);
+
 	mMesh->render();
 
+	if (textura != nullptr)textura->unbind(GL_TEXTURE0);
+	if (secondTexture != nullptr)secondTexture->unbind(GL_TEXTURE1);
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	if (textura != nullptr)textura->unbind();
 	glEnable(GL_DEPTH_TEST);
 
+}
+
+Fondo::~Fondo()
+{
+	delete mMesh; mMesh = nullptr;
+	delete textura; textura = nullptr;
+	delete camera; camera = nullptr;
+	delete secondTexture;  secondTexture = nullptr;
 }

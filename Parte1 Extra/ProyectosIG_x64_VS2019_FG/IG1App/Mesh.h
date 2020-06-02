@@ -23,7 +23,7 @@ public:
 	static Mesh* generaEstrellaTexCor(GLdouble re, GLuint np, GLdouble h);
 	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	static Mesh* generaCajaTexCor(GLdouble nl);
-	Mesh() {};
+	Mesh(): twoUnits(false) {};       //////EXTRA 2
 	virtual ~Mesh() {};
 
 	Mesh(const Mesh & m) = delete;  // no copy constructor
@@ -34,6 +34,7 @@ public:
 	GLuint size() const { return mNumVertices; };   // number of elements
 	std::vector<glm::dvec3> const& vertices() const { return vVertices; };
 	std::vector<glm::dvec4> const& colors() const { return vColors; };
+	void setTwoUnits() { twoUnits = true; }; // EXTRA 2
 	
 		
 protected:
@@ -44,6 +45,7 @@ protected:
 	std::vector<glm::dvec4> vColors;    // color array
 	std::vector<glm::dvec2> vTexCoords;      //Textures vector     
 	virtual void draw() const;
+	bool twoUnits;
 };
 //-------------------------------------------------------------------------
 

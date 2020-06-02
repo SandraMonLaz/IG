@@ -23,6 +23,8 @@ public:
   void save(const std::string& BMP_Name);
   void bind(GLuint mixMode);   // GL_REPLACE, GL_MODULATE, GL_ADD, ...
   void unbind() const { glBindTexture(GL_TEXTURE_2D, 0); };
+  void bind(GLenum textureUnit, GLuint mixMode);               // EXTRA 2
+  void unbind(GLenum textureUnit) const;                       // EXTRA 2
 
   GLuint width() const { return mWidth; };
   GLuint height() const { return mHeight; };

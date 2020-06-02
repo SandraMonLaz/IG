@@ -28,6 +28,17 @@ void Texture::bind(GLuint mixMode) // GL_REPLACE, GL_MODULATE, GL_ADD
   glBindTexture(GL_TEXTURE_2D, mId);
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mixMode);  
 }
+void Texture::bind(GLenum textureUnit, GLuint mixMode)
+{
+    glEnable(GL_TEXTURE_2D);
+    glActiveTexture(textureUnit);
+    glBindTexture(GL_TEXTURE_2D, mId);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mixMode);
+}
+void Texture::unbind(GLenum textureUnit) const
+{
+    glBindTexture(GL_TEXTURE_2D, textureUnit);
+}
 //-------------------------------------------------------------------------
 
 void Texture::load(const std::string & BMP_Name, GLubyte alpha)
