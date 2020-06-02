@@ -152,6 +152,7 @@
     <ClCompile Include="Estrella.cpp" />
     <ClCompile Include="Fondo.cpp" />
     <ClCompile Include="Foto.cpp" />
+    <ClCompile Include="glad.c" />
     <ClCompile Include="IG1App.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
