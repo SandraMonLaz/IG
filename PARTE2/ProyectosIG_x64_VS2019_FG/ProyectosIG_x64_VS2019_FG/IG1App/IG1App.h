@@ -13,6 +13,7 @@
 #include "Viewport.h"
 #include "Camera.h"
 #include "Scene.h"
+#include "Fondo.h"
 
 //-------------------------------------------------------------------------
 
@@ -79,6 +80,8 @@ protected:
 	Camera *mCamera = nullptr;
 	// Graphics objects of the scene
 	Scene *mScene = nullptr;
+	// Fondo de la escena
+	Fondo* fondo = nullptr;
 	
 	bool mStop = false; // main event processing loop
 	int mWinId = 0;	    // window's identifier

@@ -1,6 +1,5 @@
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\vc142.pdb
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\vc142.idb
-f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\planta.obj
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\pixmap32rgba.obj
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\mesh.obj
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\mbr.obj
@@ -10,6 +9,7 @@ f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\indexmesh.obj
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\ig1app.obj
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\foto.obj
+f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\fondo.obj
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\estrella.obj
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\entitywithmaterial.obj
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\entitywithindexmesh.obj
@@ -29,8 +29,9 @@ f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\rectangulorgb.obj
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\quadricentity.obj
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\poligono.obj
-f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\bin\ig1appdebug.ilk
+f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\planta.obj
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\bin\ig1appdebug.exe
+f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\bin\ig1appdebug.ilk
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\bin\ig1appdebug.pdb
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\ig1app.tlog\cl.command.1.tlog
 f:\desarrollo de videojuegos\2 curso\ig\parte2\proyectosig_x64_vs2019_fg\ig1app\x64\debug\ig1app.tlog\cl.read.1.tlog

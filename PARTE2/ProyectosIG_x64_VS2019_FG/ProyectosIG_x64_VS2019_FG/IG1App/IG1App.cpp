@@ -51,6 +51,7 @@ void IG1App::init()
 	mViewPort = new Viewport(mWinW, mWinH); //glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
 	mCamera = new Camera(mViewPort);
 	mScene = new Scene;
+	fondo = new Fondo();
 
 	mCamera->set2D();
 	mScene->init();
@@ -95,6 +96,7 @@ void IG1App::free()
 	delete mScene; mScene = nullptr;
 	delete mCamera; mCamera = nullptr;
 	delete mViewPort; mViewPort = nullptr;
+	delete fondo; fondo = nullptr;
 }
 
 //-------------------------------------------------------------------------
@@ -103,6 +105,7 @@ void IG1App::display() const
 {  // double buffering
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
+	fondo->render();
 	if (dobleVentana) {
 		display2Vistas();
 	}

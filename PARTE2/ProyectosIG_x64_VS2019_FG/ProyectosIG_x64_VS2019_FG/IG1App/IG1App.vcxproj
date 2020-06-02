@@ -131,6 +131,7 @@
     <ClInclude Include="EntityWithIndexMesh.h" />
     <ClInclude Include="EntityWithMaterial.h" />
     <ClInclude Include="Estrella.h" />
+    <ClInclude Include="Fondo.h" />
     <ClInclude Include="Foto.h" />
     <ClInclude Include="IG1App.h" />
     <ClInclude Include="IndexMesh.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="EntityWithIndexMesh.cpp" />
     <ClCompile Include="EntityWithMaterial.cpp" />
     <ClCompile Include="Estrella.cpp" />
+    <ClCompile Include="Fondo.cpp" />
     <ClCompile Include="Foto.cpp" />
     <ClCompile Include="IG1App.cpp" />
     <ClCompile Include="IndexMesh.cpp" />
