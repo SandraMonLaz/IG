@@ -2,7 +2,7 @@
 #ifndef _H_Entities_H_
 #define _H_Entities_H_
 
-#include "GLinclude.h"
+#include "GLinclude.h" //EXTRA 2
 
 #include "Mesh.h"
 #include "Texture.h"

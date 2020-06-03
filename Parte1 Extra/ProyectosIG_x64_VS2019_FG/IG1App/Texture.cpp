@@ -23,21 +23,22 @@ void Texture::init()
 }
 //-------------------------------------------------------------------------
 
-void Texture::bind(GLuint mixMode) // GL_REPLACE, GL_MODULATE, GL_ADD
+/*void Texture::bind(GLuint mixMode) // GL_REPLACE, GL_MODULATE, GL_ADD
 {
   glBindTexture(GL_TEXTURE_2D, mId);
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mixMode);  
-}
-void Texture::bind(GLenum textureUnit, GLuint mixMode)
+}*/
+void Texture::bind(GLuint mixMode, GLenum textureUnit)		  // EXTRA2
 {
-    glEnable(GL_TEXTURE_2D);
-    glActiveTexture(textureUnit);
-    glBindTexture(GL_TEXTURE_2D, mId);
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mixMode);
+    glEnable(GL_TEXTURE_2D);                      			  // EXTRA2
+    glActiveTexture(textureUnit);              			      // EXTRA2
+    glBindTexture(GL_TEXTURE_2D, mId);                        // EXTRA2
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mixMode);  // EXTRA2
 }
 void Texture::unbind(GLenum textureUnit) const
 {
-    glBindTexture(GL_TEXTURE_2D, textureUnit);
+	glActiveTexture(textureUnit);              			      // EXTRA2
+    glBindTexture(GL_TEXTURE_2D, 0);             			  // EXTRA2
 }
 //-------------------------------------------------------------------------
 

@@ -23,20 +23,15 @@ void Mesh::render() const
 			glColorPointer(4, GL_DOUBLE, 0, vColors.data());  // components number (rgba=4), type of each component, stride, pointer  
 		}
 		if (vTexCoords.size() > 0) {
-			if (twoUnits) {                                                     ///////EXTRA 2
-				glClientActiveTexture(GL_TEXTURE0);                             ///////EXTRA 2
-				glEnableClientState(GL_TEXTURE_COORD_ARRAY);                    ///////EXTRA 2
-				glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());          ///////EXTRA 2
+			glClientActiveTexture(GL_TEXTURE0);                             ///////EXTRA 2
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);                    ///////EXTRA 2
+			glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());          ///////EXTRA 2
 
+			if (twoUnits) {                                                     ///////EXTRA 2
 				glClientActiveTexture(GL_TEXTURE1);                             ///////EXTRA 2
 				glEnableClientState(GL_TEXTURE_COORD_ARRAY);                    ///////EXTRA 2
 				glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());          ///////EXTRA 2
 			}                                                                   ///////EXTRA 2
-			else
-			{
-				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-				glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());
-			}
 		}
 
 		draw();

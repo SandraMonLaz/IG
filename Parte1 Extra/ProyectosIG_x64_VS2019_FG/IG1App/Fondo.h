@@ -2,7 +2,7 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "Camera.h"
-class Fondo
+class Fondo    // EXTRA 1
 {
 public:
 	Fondo() {

@@ -2,7 +2,7 @@
 #ifndef _H_Texture_H_
 #define _H_Texture_H_
 
-#include "GLinclude.h"
+#include "GLinclude.h" //EXTRA 2
 #include "Pixmap32RGBA.h"
 #include <string>
 
@@ -21,10 +21,10 @@ public:
   void load(const std::string& BMP_Name, glm::u8vec3 color, GLubyte alpha);
   void loadColorBuffer(GLdouble w, GLdouble h); // load from GPU
   void save(const std::string& BMP_Name);
-  void bind(GLuint mixMode);   // GL_REPLACE, GL_MODULATE, GL_ADD, ...
-  void unbind() const { glBindTexture(GL_TEXTURE_2D, 0); };
-  void bind(GLenum textureUnit, GLuint mixMode);               // EXTRA 2
-  void unbind(GLenum textureUnit) const;                       // EXTRA 2
+ // void bind(GLuint mixMode);   // GL_REPLACE, GL_MODULATE, GL_ADD, ...
+ // void unbind() const { glBindTexture(GL_TEXTURE_2D, 0); };
+  void bind(GLuint mixMode, GLenum textureUnit = GL_TEXTURE0);               // EXTRA 2
+  void unbind(GLenum textureUnit = GL_TEXTURE0) const;                       // EXTRA 2
 
   GLuint width() const { return mWidth; };
   GLuint height() const { return mHeight; };
