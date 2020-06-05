@@ -75,6 +75,7 @@ void Grid::render(glm::dmat4 const& modelViewMat) const
 
 		if (mTexture != nullptr) {
 			mTexture->bind(GL_REPLACE); 
+			//Para que las texturas reaccionen a la luz
 			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		}
 		upload(aMat);

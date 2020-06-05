@@ -115,11 +115,10 @@ IndexMesh* IndexMesh::generateGrid(GLdouble lado, GLuint nDiv)
 	double distancia = lado / nDiv;
 	double posX = -(lado / 2);
 	double posZ = -(lado / 2);
-	//Hacemos el perfil
 	mesh->vVertices.reserve((nDiv+1)*(nDiv+1));
-
-	//Trasladamos el perfil
+	//Bucle de las filas
 	for (int i = 0; i < nDiv + 1; i++) {
+		//Bucle de las columnas
 		for (int j = 0; j < nDiv+1; j++) {
 			mesh->vVertices.emplace_back(glm::dvec3(posX, 0, posZ));
 			posX += distancia;
@@ -161,6 +160,7 @@ IndexMesh* IndexMesh::generateGridTex(GLdouble lado, GLuint nDiv)
 	IndexMesh* mesh = generateGrid(lado,nDiv);
 	GLdouble distancia = 1 / GLdouble(nDiv);
 
+	//Ponemos las mismas coordenadas que en los vertices solo que en el rango [0,1]
 	double posX = 0;
 	double posY = 0;
 	mesh->vTexCoords.reserve(mesh->vVertices.size());

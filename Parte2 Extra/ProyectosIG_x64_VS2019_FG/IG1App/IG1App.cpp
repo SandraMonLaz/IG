@@ -199,10 +199,10 @@ void IG1App::key(unsigned char key, int x, int y)
 		mScene->setLight(false, 2);
 		break;
 	case 't':
-		mScene->setLight(true, 5);
+		mScene->setLight(true, 3);
 		break;
 	case 'g':
-		mScene->setLight(false, 5);
+		mScene->setLight(false, 3);
 		break;
 	case 'd':
 		mScene->setLight(true, 4);

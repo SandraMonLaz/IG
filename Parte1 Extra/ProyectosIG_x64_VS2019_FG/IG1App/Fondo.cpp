@@ -35,4 +35,5 @@ Fondo::~Fondo()
 	delete textura; textura = nullptr;
 	delete camera; camera = nullptr;
 	delete secondTexture;  secondTexture = nullptr;
+	delete viewport; viewport = nullptr;
 }

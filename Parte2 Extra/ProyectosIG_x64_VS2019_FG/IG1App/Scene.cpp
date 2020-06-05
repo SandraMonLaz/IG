@@ -49,12 +49,14 @@ Scene::~Scene() {
 	if (directionalLight != nullptr) delete directionalLight;
 	if (planeLight != nullptr) delete planeLight;
 	if (cameraLight != nullptr) delete cameraLight;
+	if (sirenLight != nullptr) delete sirenLight;
 
 	positionalLight = nullptr;
 	spotSceneLight = nullptr;
 	directionalLight = nullptr;
 	planeLight = nullptr;
 	cameraLight = nullptr;
+	sirenLight = nullptr;
 };
 
 void Scene::init()
@@ -281,7 +283,7 @@ void Scene::escena7()
 
 void Scene::escenaGrid()
 {
-
+	//Cargamos las texturas del gridCube
 	Texture* gridtext = new Texture();
 	gridtext->load("../Bmps/checker.bmp");
 	gTextures.push_back(gridtext);
@@ -289,9 +291,10 @@ void Scene::escenaGrid()
 	Texture* gridWall = new Texture();
 	gridWall->load("../Bmps/stones.bmp");
 	gTextures.push_back(gridWall);
+
+	//creamos el gridCube 
 	GridCube* g = new GridCube(gridtext,gridWall);
-	//Grid* g = new Grid(200, 10);
-	//g->setTexture(gridtext);
+
 	gObjects.push_back(new EjesRGB(400.0));
 	gObjects.push_back(g);
 
@@ -414,6 +417,9 @@ void Scene::free()
 	{
 		delete el;  el = nullptr;
 	}
+
+	avion = nullptr;
+	sirenCube = nullptr;
 
 }
 //-------------------------------------------------------------------------
@@ -580,9 +586,16 @@ void Scene::setLight(bool encendida, int id)
 		case 0: l = directionalLight; luzDireccionalActivada = encendida; break;
 		case 1: l = positionalLight; luzPosicionalActivada = encendida; break;
 		case 2: l = spotSceneLight; luzFocalActivada = encendida; break;
-		case 3: l = planeLight; luzFocalAvionActivada = encendida; break;
+		case 3: {
+			if (mId == 7) {
+				l = planeLight; luzFocalAvionActivada = encendida; 
+			}
+			else {
+				l = sirenLight; luzSirenaActivada = encendida;
+			}
+			break;
+		}
 		case 4: l = cameraLight; luzCamaraActivada = encendida; break;
-		case 5: l = sirenLight; luzSirenaActivada = encendida; break;
 		default:break;
 	}
 	if (l != nullptr) {
