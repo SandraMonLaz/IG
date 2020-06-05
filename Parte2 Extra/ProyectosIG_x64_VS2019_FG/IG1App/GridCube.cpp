@@ -39,7 +39,7 @@ GridCube::GridCube(Texture* arribaT, Texture* lateral)
 	addEntity(ladoX1);
 	addEntity(ladoX2);
 	addEntity(ladoZ1);
-	//addEntity(ladoZ2);
+	addEntity(ladoZ2);
 
 
 }

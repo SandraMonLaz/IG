@@ -146,6 +146,7 @@
     <ClInclude Include="RectanguloRGB.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Sierpinski.h" />
+    <ClInclude Include="SirenCube.h" />
     <ClInclude Include="Suelo.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TrianguloRGB.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="RectanguloRGB.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sierpinski.cpp" />
+    <ClCompile Include="SirenCube.cpp" />
     <ClCompile Include="Suelo.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TrianguloRGB.cpp" />

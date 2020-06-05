@@ -72,14 +72,14 @@ void Grid::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		glm::dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
-		glColor3f(1, 0, 0);
 
-		if (mTexture != nullptr) mTexture->bind(GL_REPLACE);
+		if (mTexture != nullptr) {
+			mTexture->bind(GL_REPLACE); 
+			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+		}
 		upload(aMat);
 		mMesh->render();
-		glColor3f(1, 1, 1);
 		if (mTexture != nullptr) mTexture->unbind();
-		//glDisable(GL_COLOR_MATERIAL);
 
 	}
 }

@@ -33,8 +33,11 @@ Scene::Scene() {
 	 luzFocalActivada = false;        spotSceneLight = nullptr;
 	 luzFocalAvionActivada = false;   planeLight = nullptr;
 	 luzCamaraActivada = false;       cameraLight = nullptr;
+	 luzSirenaActivada = false;       sirenLight = nullptr;
 
+	 radioOrbita = 150;
 	 avion = nullptr;
+	 sirenCube = nullptr;
 }
 
 Scene::~Scene() {
@@ -83,9 +86,9 @@ void Scene::init()
 	else if (mId == 7)
 		escena7();
 	else if (mId == 8)
-		escena8();
-	else if (mId == 9)
 		escenaGrid();
+	else if (mId == 9)
+		escenaSirenCube();
 }
 void Scene::escena0() {
 	Poligono* cir = new Poligono(100, 200);
@@ -240,14 +243,9 @@ void Scene::escena5()
 	gObjects.push_back(avion);
 }
 //Cono
-void Scene::escena6()
-{
-	Cono* cono = new Cono(100, 50, 12, glm::dvec4(0.0f, 0.0f, 1.0f, 1.0f));
-	gObjects.push_back(new EjesRGB(400.0));
-	gObjects.push_back(cono);
-}
+
 //Esferas
-void Scene::escena7()
+void Scene::escena6()
 {
 	Esfera* esfera = new Esfera(20, 200, 20, glm::dvec4(0.0f, 0.0f, 1.0f, 1.0f));
 	esfera->setModelMat(translate(glm::dmat4(1), dvec3(0, 0,400)));
@@ -260,7 +258,7 @@ void Scene::escena7()
 }
 
 //Escena Planeta/Avion
-void Scene::escena8()
+void Scene::escena7()
 {
 
 	int radioEsfera = 150;
@@ -286,6 +284,7 @@ void Scene::escenaGrid()
 
 	Texture* gridtext = new Texture();
 	gridtext->load("../Bmps/checker.bmp");
+	gTextures.push_back(gridtext);
 
 	Texture* gridWall = new Texture();
 	gridWall->load("../Bmps/stones.bmp");
@@ -295,6 +294,26 @@ void Scene::escenaGrid()
 	//g->setTexture(gridtext);
 	gObjects.push_back(new EjesRGB(400.0));
 	gObjects.push_back(g);
+
+}
+
+void Scene::escenaSirenCube()
+{
+	Texture* gridtext = new Texture();
+	gridtext->load("../Bmps/checker.bmp");
+	gTextures.push_back(gridtext);
+
+	Texture* gridWall = new Texture();
+	gridWall->load("../Bmps/stones.bmp");
+	gTextures.push_back(gridWall);
+
+	//Planeta
+	Esfera* esfera = new Esfera(120, radioOrbita , 120, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
+
+	sirenCube = new SirenCube(gridtext,gridWall, radioOrbita +30, sirenLight);
+	gObjects.push_back(sirenCube);
+	gObjects.push_back(esfera);
+	gObjects.push_back(new EjesRGB(400.0));
 
 }
 
@@ -466,7 +485,7 @@ void Scene::setLights()
 	spotSceneLight->setAmb(ambient);
 	spotSceneLight->setDiff(diffuse);
 	spotSceneLight->setSpecular(specular);
-	spotSceneLight->setSpot(dir, 45, 0);
+	spotSceneLight->setSpot(dir, 20, 0);
 	spotSceneLight->disable();
 	luzFocalActivada = false;
 
@@ -497,6 +516,21 @@ void Scene::setLights()
 	cameraLight->setSpecular(specular);
 	cameraLight->disable();
 	luzCamaraActivada = false;
+
+	//LuzSirena
+	posDir = { 0, radioOrbita+70,0, 1 };
+	dir = { 0.0, -1.0,0.3 };
+
+	ambient = { 0, 0, 0, 1 };
+	diffuse = { 1, 1, 1, 1 };
+	specular = { 0.5, 0.5, 0.5, 1 };
+	if (sirenLight == nullptr) sirenLight = new SpotLight(posDir);
+	sirenLight->setAmb(ambient);
+	sirenLight->setDiff(diffuse);
+	sirenLight->setSpecular(specular);
+	sirenLight->setSpot(dir, 20, 0);
+	sirenLight->disable();
+	luzSirenaActivada = false;
 }
 //-------------------------------------------------------------------------
 
@@ -548,6 +582,7 @@ void Scene::setLight(bool encendida, int id)
 		case 2: l = spotSceneLight; luzFocalActivada = encendida; break;
 		case 3: l = planeLight; luzFocalAvionActivada = encendida; break;
 		case 4: l = cameraLight; luzCamaraActivada = encendida; break;
+		case 5: l = sirenLight; luzSirenaActivada = encendida; break;
 		default:break;
 	}
 	if (l != nullptr) {
@@ -594,4 +629,9 @@ void Scene::move()
 }
 //-------------------------------------------------------------------------
 
+void Scene::sirenMove()
+{
+	//Le aviso al avion para que se mueva y modifique su foco
+	if (sirenCube != nullptr) sirenCube->move();
 
+}

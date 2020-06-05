@@ -12,6 +12,7 @@
 #include <vector>
 #include "Light.h"
 #include "Avion.h"
+#include "SirenCube.h"
 
 //-------------------------------------------------------------------------
 
@@ -36,6 +37,7 @@ public:
 	void setLight(bool encendida, int id);
 	void ApagarEscena();
 	void move();
+	void sirenMove();
 	
 protected:
 	int mId;
@@ -47,8 +49,8 @@ protected:
 	void escena5();
 	void escena6();
 	void escena7();
-	void escena8();
 	void escenaGrid();
+	void escenaSirenCube();
 
 	void sceneDirLight(Camera const& cam) const;
 	void scenePosLight(Camera const& cam) const;
@@ -66,6 +68,8 @@ protected:
 	bool luzFocalActivada;
 	bool luzFocalAvionActivada;
 	bool luzCamaraActivada;
+	bool luzSirenaActivada;
+	int radioOrbita;
 
 	//Luces de la escena
 	DirLight* directionalLight;
@@ -73,8 +77,10 @@ protected:
 	SpotLight* spotSceneLight;
 	SpotLight* planeLight;
 	PosLight* cameraLight;
+	SpotLight* sirenLight;
 
 	Avion* avion; //Referencia al avisón de la escena 8
+	SirenCube* sirenCube;
 
 	void setLights();
 };

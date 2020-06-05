@@ -199,10 +199,10 @@ void IG1App::key(unsigned char key, int x, int y)
 		mScene->setLight(false, 2);
 		break;
 	case 't':
-		mScene->setLight(true, 3);
+		mScene->setLight(true, 5);
 		break;
 	case 'g':
-		mScene->setLight(false, 3);
+		mScene->setLight(false, 5);
 		break;
 	case 'd':
 		mScene->setLight(true, 4);
@@ -215,6 +215,9 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'y':
 		mScene->move();
+		break;
+	case 'j':
+		mScene->sirenMove();
 		break;
 	case '0':
 		mScene->setState(0);

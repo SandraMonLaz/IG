@@ -7,7 +7,7 @@ public:
 	~CompoundEntity();
 	void addEntity(Abs_Entity* ae) { gObjects.push_back(ae); }
 	void render(glm::dmat4 const& modelViewMat) const ;
-private:
+protected:
 	std::vector<Abs_Entity*> gObjects;
 };
 
