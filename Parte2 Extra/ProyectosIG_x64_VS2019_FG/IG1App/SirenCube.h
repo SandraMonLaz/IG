@@ -18,7 +18,6 @@ public:
 
 
 private:
-	CompoundEntity* sirenCar;
 	int radioOrbita;
 	double angle;
 	SpotLight* siren;

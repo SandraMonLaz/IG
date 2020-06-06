@@ -265,7 +265,7 @@ void Scene::escena7()
 
 	int radioEsfera = 150;
 	avion = new Avion(radioEsfera+60, planeLight);
-	Esfera* esfera = new Esfera(120, radioEsfera, 120, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
+	Esfera* esfera = new Esfera(200, radioEsfera, 200, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
 
 	/////////////////////////Para que esté con matrial y color dorado///////////////////////////////
 	//esfera->setGold(); 
@@ -311,7 +311,7 @@ void Scene::escenaSirenCube()
 	gTextures.push_back(gridWall);
 
 	//Planeta
-	Esfera* esfera = new Esfera(120, radioOrbita , 120, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
+	Esfera* esfera = new Esfera(200, radioOrbita , 200, glm::dvec4(127.0f / 255.0f, 1.0f, 212.0f / 255.0f, 1.0f));
 
 	sirenCube = new SirenCube(gridtext,gridWall, radioOrbita +30, sirenLight);
 	gObjects.push_back(sirenCube);
@@ -524,8 +524,8 @@ void Scene::setLights()
 	luzCamaraActivada = false;
 
 	//LuzSirena
-	posDir = { 0, radioOrbita+70,0, 1 };
-	dir = { 0.0, -1.0,0.3 };
+	posDir = { 0, 50,0, 1 };
+	//dir = { 0.0, -1.0,0.3 };
 
 	ambient = { 0, 0, 0, 1 };
 	diffuse = { 1, 1, 1, 1 };
@@ -534,7 +534,7 @@ void Scene::setLights()
 	sirenLight->setAmb(ambient);
 	sirenLight->setDiff(diffuse);
 	sirenLight->setSpecular(specular);
-	sirenLight->setSpot(dir, 20, 0);
+	//sirenLight->setSpot(dir, 20, 0);
 	sirenLight->disable();
 	luzSirenaActivada = false;
 }

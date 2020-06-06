@@ -33,31 +33,58 @@ Avion::Avion(int r, SpotLight* faro) : CompoundEntity(), angle(0), heliceAngle(0
 	alas->setModelMat(scale(glm::dmat4(1), glm::dvec3(8, 0.4, 2)));
 	alas->setCopper(true);
 	
-	CompoundEntity* avion = new CompoundEntity();
+	///Esto se hizo en la entrega de "Practica 2" se ha corregido 
+	/*CompoundEntity* avion = new CompoundEntity();
 	avion->addEntity(alas);
 	avion->addEntity(chasis);
 	avion->setModelMat(translate(dmat4(1), dvec3(0, radioOrbita, 0)));
-	avion->setModelMat(scale(avion->modelMat(), glm::dvec3(0.2, 0.2, 0.2)));
+	avion->setModelMat(scale(avion->modelMat(), glm::dvec3(0.2, 0.2, 0.2)));*/
+	//this->addEntity(avion);
 
-	this->addEntity(avion);
-
-	double compY = radioOrbita * cos(radians(angle));
+	addEntity(alas);
+	addEntity(chasis);
 	double compZ = radioOrbita * sin(radians(angle));
-	luzFoco->setPosDir(fvec3(0, compY, compZ));
-	luzFoco->setSpot(fvec3(0.0f, -compY, -compZ), 30, 1);
+	double compY = radioOrbita * cos(radians(angle));
+	setModelMat(translate(dmat4(1), dvec3(0, compY, compZ)));
+
+	///Esto se hizo en la entrega de "Practica 2" se ha corregido 
+	//setModelMat(rotate(mModelMat, glm::radians(angle), dvec3(1, 0, 0)));
+
+	setModelMat(scale(modelMat(), dvec3(0.2, 0.2, 0.2)));
+
+
+	luzFoco->setPosDir(fvec3(0, -30, 0));
+	luzFoco->setSpot(fvec3(0.0f, -1, 0.0f), 30, 1);
+}
+
+void Avion::render(glm::dmat4 const& modelViewMat) const
+{
+	CompoundEntity::render(modelViewMat);
+	glm::dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+	luzFoco->upload(aMat);
 }
 
 void Avion::move()
 {
+	///Esto se hizo en la entrega de "Practica 2" se ha corregido 
 	//Rotamos el objeto desde el pivote del (0,0,0)
-	this->setModelMat(rotate(dmat4(1), glm::radians(angle), dvec3(1, 0, 0)));
+	//this->setModelMat(rotate(dmat4(1), glm::radians(angle), dvec3(1, 0, 0)));
+
+	double compZ = radioOrbita * sin(radians(angle));
+	double compY = radioOrbita * cos(radians(angle));
+	setModelMat(translate(dmat4(1), dvec3(0, compY, compZ)));
+	setModelMat(rotate(mModelMat, glm::radians(angle), dvec3(1, 0, 0)));
+	setModelMat(scale(modelMat(), dvec3(0.2, 0.2, 0.2)));
+
 	angle++;
 	//Rotamos las hélices con un angulo de 10º
 	helicesAvion->setModelMat(rotate(helicesAvion->modelMat(), radians(10.0), dvec3(0, 0, 1)));
 
+
+	///Esto se hizo en la entrega de "Practica 2" se ha corregido 
 	//Movemos la luz conforme al avión apuntando al origen
-	double compY = radioOrbita * cos(radians(angle));
-	double compZ = radioOrbita * sin(radians(angle));
-	luzFoco->setPosDir(fvec3(0, compY, compZ));
-	luzFoco->setSpot(fvec3(0.0f, -compY, -compZ), 30, 1);
+	// compY = radioOrbita * cos(radians(angle));
+	// compZ = radioOrbita * sin(radians(angle));
+	//luzFoco->setPosDir(fvec3(0, compY, compZ));
+	//luzFoco->setSpot(fvec3(0.0f, -compY, -compZ), 30, 1);
 }

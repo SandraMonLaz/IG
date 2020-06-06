@@ -6,6 +6,7 @@ class Avion :	public CompoundEntity
 public:
 	Avion(int r, SpotLight* faro);
 	~Avion() {};
+	void render(glm::dmat4 const& modelViewMat) const;
 
 	void move();
 private:
