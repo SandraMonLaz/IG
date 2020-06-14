@@ -624,6 +624,7 @@ void Scene::ApagarEscena()
 			spotSceneLight->disable();
 			planeLight->disable();
 			cameraLight->disable();
+			sirenLight->disable();
 		}
 		//Se activa solo la luz direccional
 		else {

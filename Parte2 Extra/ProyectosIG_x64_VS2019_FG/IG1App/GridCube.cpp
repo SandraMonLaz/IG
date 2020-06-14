@@ -5,6 +5,8 @@
 GridCube::GridCube(Texture* arribaT, Texture* lateral)
 {
 
+	//Todas las transformaciones que se hacen son para que las texturas queden de manera vertical, además
+	// de modificar su posición.
 	//Tapa y suelo
 	Grid* arriba = new Grid(200,10);
 	arriba->setModelMat(glm::translate(glm::dmat4(1), glm::dvec3(0,100,0)));

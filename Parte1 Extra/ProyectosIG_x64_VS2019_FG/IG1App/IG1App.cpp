@@ -51,7 +51,7 @@ void IG1App::init()
 	mViewPort = new Viewport(mWinW, mWinH); //glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
 	mCamera = new Camera(mViewPort);
 	mScene = new Scene;
-	fondo = new Fondo();    //EXTRA 1
+	mFondo = new Fondo();    //EXTRA 1
 	mCamera->set2D();
 	mScene->init();
 }
@@ -97,7 +97,7 @@ void IG1App::free()
 	delete mScene; mScene = nullptr;
 	delete mCamera; mCamera = nullptr;
 	delete mViewPort; mViewPort = nullptr;
-	delete fondo; fondo = nullptr;						 // EXTRA 1
+	delete mFondo; mFondo = nullptr;						 // EXTRA 1
 }
 
 //-------------------------------------------------------------------------
@@ -105,8 +105,8 @@ void IG1App::free()
 void IG1App::display() const
 {  // double buffering
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
-	fondo->setSizeVP(mWinW, mWinH);                       // EXTRA 1
-	fondo->render();                                      // EXTRA 1
+	mFondo->setSizeVP(mWinW, mWinH);                       // EXTRA 1
+	mFondo->render();                                      // EXTRA 1 
 	if (dobleVentana) {
 		display2Vistas();
 	}
@@ -141,7 +141,7 @@ void IG1App::resize(int newWidth, int newHeight)
 
 	// Resize Viewport to the new window size
 	mViewPort->setSize(newWidth, newHeight);
-	fondo->setSizeVP(newWidth, newHeight);                      // EXTRA 1
+	mFondo->setSizeVP(newWidth, newHeight);                      // EXTRA 1
 
 	// Resize Scene Visible Area such that the scale is not modified
 	mCamera->setSize(mViewPort->width(), mViewPort->height());

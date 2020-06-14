@@ -1,23 +1,25 @@
 #include "SirenCube.h"
 #include "EntityWithMaterial.h"
 
-SirenCube::SirenCube(Texture* arriba, Texture* lateral, int r, SpotLight* sp): siren(sp)
+SirenCube::SirenCube(Texture* arriba, Texture* lateral, int r, SpotLight* sp): siren(sp), radioOrbita(r), angle(0)
 {
-	radioOrbita = r ;
-	angle = 0;
 	Esfera* es = new Esfera(20, 50, 20, dvec4(1.0f, 0.0f, 0.0f, 1.0f));
 	es->setModelMat(translate(dmat4(1), dvec3(0, 100, 0)));
+
 	GridCube* g = new GridCube(arriba, lateral);
+
 	addEntity(g);
 	addEntity(es);
+
 	setModelMat(translate(dmat4(1), dvec3(0, radioOrbita, 0)));
 	setModelMat(scale(modelMat(), dvec3(0.3, 0.3, 0.3)));
+	fvec3 dir = { 0.0, -1.0,0.5 };
+	siren->setSpot(dir,20,5);
+
 	//glm::fvec4 posDir = { 1, 1, 1, 0 };
 	//fvec3 posDir = {0,radioOrbita +30, 0};
 	//fvec3 posDir = {0,0,0};
-	fvec3 dir = { 0.0, -1.0,0.5 };
 	//siren->setPosDir(posDir);
-	siren->setSpot(dir,20,5);
 }
 
 
